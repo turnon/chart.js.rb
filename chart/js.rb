@@ -1,4 +1,5 @@
 require 'json'
+require 'chart/rgba'
 
 module Js
   def js
@@ -8,7 +9,7 @@ module Js
       </div>
     EOS
   end
-  
+
   class Style < BasicObject
     def initialize opts={}
       @opts = opts
@@ -20,26 +21,34 @@ module Js
   end
 
   private
-  
+
   def acceptStyle opts={}
     @name = opts[:name]
     @style = Style.new opts
   end
-  
+
   def name
     @name
   end
-  
+
   def style
     @style
   end
 
   def mergedDatasets
-    datasets.map{ |ds| ds.merge dataset_options}
+    datasets.map{ |ds| ds.merge(dataset_options).merge(color)}
   end
 
   def mergedOptions
     chart_options.merge({responsive: false})
+  end
+
+  def color
+    color = RGBA.new
+    {
+     borderColor: color.notation,
+     backgroundColor: color.darker.notation
+    }
   end
 
   def canvas
@@ -47,11 +56,11 @@ module Js
       <canvas id="#{name}" width="#{width}" height="#{height}"></canvas>
     EOS
   end
-  
+
   def width
     style.width || 600
   end
-  
+
   def height
     style.height || 300
   end
