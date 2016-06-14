@@ -24,7 +24,7 @@ module MyChart
     end
 
     def data dat=nil, &blk
-      put :all, RawData.new(dat.nil? ? blk.call : dat)
+      put :__all__, RawData.new(dat.nil? ? blk.call : dat)
     end
 
     def select name, &blk
@@ -34,11 +34,12 @@ module MyChart
     def group_by name, opts={}, &blk    
       material = opts[:base_on] ? get(opts[:base_on]) : all_data
       by = block_given? ? blk : name.to_sym
-      put name.to_sym, material.group_by(&by)
+      put name.to_sym, material.group_by(opts.merge({name: name.to_sym}), &by)
     end
 
     def output
-      pp @materials.production.map{|name, subchart| {name: name, chart: subchart.js}}
+      #pp @materials.production.map{|name, subchart| {name: name, chart: subchart.js}}
+      @materials.production.map{|name, subchart| puts subchart.js}
     end
 
     private
@@ -52,7 +53,7 @@ module MyChart
     end
 
     def all_data
-      get :all
+      get :__all__
     end
 
   end

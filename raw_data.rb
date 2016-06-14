@@ -1,4 +1,6 @@
-require 'one_data_chart'
+require 'chart/js'
+require 'chart/xy'
+require 'chart/z'
 
 class RawData
   def initialize objs
@@ -9,8 +11,16 @@ class RawData
     RawData.new @objs.select(&blk)
   end
 
-  def group_by &blk
-    OneDataChart.new data: @objs, &blk
+  def group_by opts={}, &blk
+    type = getChartType(opts[:type])
+    type.new opts.merge({data: @objs}), &blk
+  end
+
+  private
+
+  def getChartType type
+    require "charts/#{type.to_s}"
+    Module.const_get type.capitalize
   end
 
 end

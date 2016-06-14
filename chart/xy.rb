@@ -1,13 +1,15 @@
-require 'multi_data_chart'
-require 'js'
-
-class OneDataChart
-
-  include Js
+module XY
 
   def initialize opts={}, &blk
     @objs = opts[:data]
     @by = blk
+    acceptStyle opts
+  end
+  
+  private
+  
+  def type
+    self.class.to_s.downcase
   end
 
   def labels
@@ -23,13 +25,8 @@ class OneDataChart
     ]
   end
 
-  def group_by attr=nil, &blk
-    MultiDataChart.new base: groups, attr: attr, &blk
-  end
-
-  private
-
   def groups
     @groups ||= @objs.group_by &@by
   end
+
 end
