@@ -5,7 +5,7 @@ $:.unshift Dir.pwd
 require 'material_pool'
 require 'raw_data'
 
-module Chart
+module MyChart
 
   class << self
 
