@@ -28,6 +28,6 @@ class RGBA
   end
 
   def light_alpha
-    0.2
+    0.3
   end
 end

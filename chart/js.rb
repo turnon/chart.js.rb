@@ -43,14 +43,6 @@ module Js
     chart_options.merge({responsive: false})
   end
 
-  def color
-    color = RGBA.new
-    {
-     borderColor: color.notation,
-     backgroundColor: color.darker.notation
-    }
-  end
-
   def canvas
     <<-EOS
       <canvas id="#{name}" width="#{width}" height="#{height}"></canvas>

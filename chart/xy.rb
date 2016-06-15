@@ -9,7 +9,8 @@ module XY
   private
   
   def type
-    self.class.to_s.downcase
+    class_name = self.class.to_s
+    class_name[0].downcase + class_name[1..-1]
   end
 
   def labels
