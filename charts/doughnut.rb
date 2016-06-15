@@ -1,7 +1,6 @@
-class Doughnut
+class Doughnut < Proto
 
-  include Js
-  include XY
+  exclude Z
 
   def dataset_options
     {fill: false}

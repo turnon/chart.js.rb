@@ -1,7 +1,5 @@
-class Bar
+class Bar < Proto
 
-  include Js
-  include XY
   include Z
 
   def dataset_options

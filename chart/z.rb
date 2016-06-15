@@ -10,7 +10,11 @@ module Z
         end
       end
     end
-    
+
+    def excluded xy
+      colorful_xlabel xy
+    end
+
     private
     
     def addZ xy      
@@ -50,6 +54,27 @@ module Z
           hash_2d.values.reduce([]) do |labels, hash|
             labels + hash.keys
           end.uniq
+        end
+
+        define_method :color do
+          color = RGBA.new
+          {
+           borderColor: color.notation,
+           backgroundColor: color.darker.notation
+          }
+        end
+      end
+    end
+
+    def colorful_xlabel xy
+      xy.class_exec do
+        private
+        define_method :color do
+          colors = labels.map{ |l| RGBA.new }
+          {
+           borderColor: colors.map{ |c| c.notation },
+           backgroundColor: colors.map{ |c| c.darker.notation }
+          }
         end
       end
     end

@@ -1,6 +1,5 @@
-require 'chart/js'
-require 'chart/xy'
-require 'chart/z'
+require 'chart/proto'
+require 'helper/symbol'
 
 class RawData
   def initialize objs
@@ -19,8 +18,9 @@ class RawData
   private
 
   def getChartType type
-    require "charts/#{type.to_s}"
-    Module.const_get type.capitalize
+    require "charts/#{type.underscore}"
+    raise "can not find chart type #{type} in #{Proto.list}" if Proto[type].nil?
+    Proto[type]
   end
 
 end

@@ -1,7 +1,6 @@
-class Pie
+class Pie < Proto
 
-  include Js
-  include XY
+  exclude Z
 
   def dataset_options
     {fill: false}
