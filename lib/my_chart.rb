@@ -1,7 +1,3 @@
-require 'pp'
-
-$:.unshift Dir.pwd
-
 require 'material_pool'
 require 'raw_data'
 
@@ -58,8 +54,4 @@ module MyChart
 
   end
 
-end
-
-ARGV.each do |f|
-  require File.basename(f, '.rb')
 end

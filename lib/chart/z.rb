@@ -9,6 +9,7 @@ module Z
           xy.instance_variable_get :@xyz
         end
       end
+      one_color_xlabel xy
     end
 
     def excluded xy
@@ -56,6 +57,12 @@ module Z
           end.uniq
         end
 
+      end
+    end
+    
+    def one_color_xlabel xy
+      xy.class_exec do
+        private
         define_method :color do
           color = RGBA.new
           {
