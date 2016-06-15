@@ -1,5 +1,6 @@
 require 'material_pool'
 require 'raw_data'
+require 'erb'
 
 module MyChart
 
@@ -8,7 +9,7 @@ module MyChart
     def js &blk
       @chart = Chart.new
       @chart.instance_exec &blk
-      @chart.output
+      @chart.write
     end
 
   end
@@ -33,9 +34,14 @@ module MyChart
       put name.to_sym, material.group_by(opts.merge({name: name.to_sym}), &by)
     end
 
-    def output
-      #pp @materials.production.map{|name, subchart| {name: name, chart: subchart.js}}
-      @materials.production.map{|name, subchart| puts subchart.js}
+    def output file
+      @file = file
+    end
+
+    def write
+      canvases = @materials.productions
+      html = ERB.new(File.read html_template).result(binding)
+      File.write @file, html
     end
 
     private
@@ -50,6 +56,10 @@ module MyChart
 
     def all_data
       get :__all__
+    end
+
+    def html_template
+      File.join File.dirname(__FILE__), 'tmpl.htm'
     end
 
   end
