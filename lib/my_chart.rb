@@ -1,5 +1,5 @@
 require 'material_pool'
-require 'raw_data'
+require 'x'
 require 'erb'
 
 module MyChart
@@ -9,10 +9,13 @@ module MyChart
     def js &blk
       @chart = Chart.new
       @chart.instance_exec &blk
-      @chart.write
+      @chart#.write
     end
 
   end
+
+  ALL_DATA = :__all__
+  AND = :_and_
 
   class Chart
 
@@ -20,35 +23,27 @@ module MyChart
       @materials = MaterialPool.new
     end
 
-    def data dat=nil, &blk
-      put :__all__, RawData.new(dat.nil? ? blk.call : dat)
+    def material dat=nil, &blk
+      objs = dat.nil? ? blk.call : dat
+      put ALL_DATA, X.new(objs)
     end
 
-    def select name, &blk
-      put name, all_data.select(&blk)
+    def select name, opt={}, &blk
+      if opt[:from]
+        material_id = opt[:from]
+        production_id = [name, AND, material_id].join.to_sym
+      else
+        material_id = ALL_DATA
+        production_id = name
+      end
+      put production_id, get(material_id).select(&blk)
     end
-
-    def group_by name, opts={}, &blk    
-      material = opts[:base_on] ? get(opts[:base_on]) : all_data
-      by = block_given? ? blk : name.to_sym
-      put name.to_sym, material.group_by(opts.merge({name: name.to_sym}), &by)
-    end
-
-    def output file
-      @file = file
-    end
-
-    def write
-      canvases = @materials.productions
-      html = ERB.new(File.read html_template).result(binding)
-      File.write @file, html
-    end
-
-    private
 
     def get name
       @materials.get name.to_sym
     end
+
+    private
 
     def put name, material
       @materials.put name.to_sym, material
