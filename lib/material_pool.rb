@@ -12,9 +12,11 @@ class MaterialPool
     @p[name] = material
   end
 
-  def production
+  def productions
     @p.select do |name, material|
       material.respond_to? :js
+    end.map do |name, material|
+      material.js
     end
   end
 
