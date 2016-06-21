@@ -4,10 +4,10 @@ require 'my_chart'
 class TestMyChart < MiniTest::Unit::TestCase
 
   def test_material
-    all_material = @mc.get :__all__    
+    all_material = @mc.get MyChart::ALL_DATA
     assert_equal [1,2,3,4,5,6,7,8,9,10], all_material.value
 
-    all_material_defined_by_block = @mc.get :__all__
+    all_material_defined_by_block = @mc1.get MyChart::ALL_DATA
     assert_equal [1,2,3,4,5,6,7,8,9,10], all_material_defined_by_block.value
   end
 
@@ -26,20 +26,21 @@ class TestMyChart < MiniTest::Unit::TestCase
     @mc = MyChart.js do
       material [1,2,3,4,5,6,7,8,9,10]
 
+      select :even, from: :ge3 do |obj|
+        obj.even?
+      end
+
       select :ge3 do |obj|
         obj >= 3
       end
 
       select :x2, &:even?
 
-      select :even, from: :ge3 do |obj|
-        obj.even?
-      end
     end
 
     @mc1 = MyChart.js do
       material do
-        1..10
+        (1..10).to_a
       end
     end
 
