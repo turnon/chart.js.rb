@@ -1,4 +1,5 @@
 require 'material_pool'
+require 'tasks'
 require 'x'
 require 'erb'
 
@@ -9,23 +10,29 @@ module MyChart
     def js &blk
       @chart = Chart.new
       @chart.instance_exec &blk
+      @chart.generate
       @chart#.write
     end
 
   end
 
-  ALL_DATA = :__all__
+  ALL_DATA = Tasks::ROOT
   AND = :_and_
 
   class Chart
 
     def initialize
       @materials = MaterialPool.new
+      @tasks = Tasks.new
     end
 
     def material dat=nil, &blk
-      objs = dat.nil? ? blk.call : dat
-      put ALL_DATA, X.new(objs)
+      @tasks.add ALL_DATA do |pre|
+        objs = dat.nil? ? blk.call : dat
+        x = X.new(objs)
+        @materials.put ALL_DATA, X.new(objs)
+        x
+      end
     end
 
     def select name, opt={}, &blk
@@ -36,7 +43,15 @@ module MyChart
         material_id = ALL_DATA
         production_id = name
       end
-      put production_id, get(material_id).select(&blk)
+      @tasks.add production_id, depends_on: material_id do |pre|
+        selected = pre.select(&blk)
+        @materials.put production_id, selected
+        selected
+      end
+    end
+
+    def generate
+      @tasks.exe
     end
 
     def get name
