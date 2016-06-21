@@ -50,7 +50,7 @@ module MyChart
     end
 
     def all_data
-      get :__all__
+      get ALL_DATA
     end
 
     def html_template
