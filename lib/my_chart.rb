@@ -17,6 +17,7 @@ module MyChart
 
   ALL_DATA = Tasks::ROOT
   AND = :_and_
+  OF = :_of_
 
   class Chart
 
@@ -31,16 +32,17 @@ module MyChart
       end
     end
 
-    def select name, opt={}, &blk
-      if opt[:from]
-        material_id = opt[:from]
-        production_id = [name, AND, material_id].join.to_sym
-      else
-        material_id = ALL_DATA
-        production_id = name
-      end
-      @tasks.add production_id, depends_on: material_id do |pre|
+    def select *args, &blk
+      arg = SelectFromARGV.new *args
+      @tasks.add arg.production_id, depends_on: arg.material_id do |pre|
         pre.select &blk
+      end
+    end
+
+    def group *args, &blk
+      arg = GroupByARGV.new *args
+      @tasks.add arg.production_id, depends_on: arg.material_id do |pre|
+        pre.group_by &blk
       end
     end
 
@@ -50,6 +52,40 @@ module MyChart
 
     def value name
       @tasks[name.to_sym].result.value
+    end
+
+    class GroupByARGV
+
+      attr_reader :material_id, :production_id
+
+      def initialize *args
+        if args.size == 2 and args[1].kind_of? Hash and args[1][:by]
+          @material_id = args[0]
+          @production_id = [args[1][:by], OF, @material_id].join.to_sym
+        elsif args.size == 1 and args[0].kind_of? Hash and args[0][:by]
+          @material_id = ALL_DATA
+          @production_id = args[0][:by]
+        else
+          raise "invalid arguments for group_by : #{args}"
+        end
+      end
+    end
+
+    class SelectFromARGV
+
+      attr_reader :material_id, :production_id
+
+      def initialize *args
+        if args.size == 2 and args[1].kind_of? Hash and args[1][:from]
+          @material_id = args[1][:from]
+          @production_id = [args[0], AND, material_id].join.to_sym
+        elsif args.size == 1
+          @material_id = ALL_DATA
+          @production_id = args[0]
+        else
+          raise "invalid arguments for select : #{args}"
+        end
+      end
     end
 
     private
