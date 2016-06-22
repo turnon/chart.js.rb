@@ -54,8 +54,8 @@ module MyChart
       @tasks.exe
     end
 
-    def get name
-      @materials.get name.to_sym
+    def value name
+      @tasks[name.to_sym].result.value
     end
 
     private
