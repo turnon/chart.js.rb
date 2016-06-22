@@ -14,6 +14,6 @@ class TestGroupByARGV < MiniTest::Unit::TestCase
   def test_base_on_specified_data
     arg = GroupByARGV.new :people, by: :age
     assert_equal :people, arg.material_id
-    assert_equal :age_of_people, arg.production_id
+    assert_equal :people_into_age, arg.production_id
   end
 end

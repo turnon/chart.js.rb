@@ -16,8 +16,8 @@ module MyChart
   end
 
   ALL_DATA = Tasks::ROOT
-  AND = :_and_
-  OF = :_of_
+  SELECTFROM_CONJOIN = :_from_
+  GROUPBY_CONJOIN = :_into_
 
   class Chart
 
@@ -61,7 +61,7 @@ module MyChart
       def initialize *args
         if args.size == 2 and args[1].kind_of? Hash and args[1][:by]
           @material_id = args[0]
-          @production_id = [args[1][:by], OF, @material_id].join.to_sym
+          @production_id = [@material_id, GROUPBY_CONJOIN, args[1][:by]].join.to_sym
         elsif args.size == 1 and args[0].kind_of? Hash and args[0][:by]
           @material_id = ALL_DATA
           @production_id = args[0][:by]
@@ -78,7 +78,7 @@ module MyChart
       def initialize *args
         if args.size == 2 and args[1].kind_of? Hash and args[1][:from]
           @material_id = args[1][:from]
-          @production_id = [args[0], AND, material_id].join.to_sym
+          @production_id = [args[0], SELECTFROM_CONJOIN, material_id].join.to_sym
         elsif args.size == 1
           @material_id = ALL_DATA
           @production_id = args[0]

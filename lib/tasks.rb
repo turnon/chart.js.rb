@@ -31,9 +31,7 @@ class Tasks
     end
 
     def prerequisite
-      pre = tasks[@depends_on]
-      raise "task #{@depends_on} not found" unless pre
-      pre
+      tasks[@depends_on] or raise "task #{@depends_on} not found"
     end
   end
 
@@ -49,7 +47,7 @@ class Tasks
   end
 
   def [] task_id
-    @tasks[task_id]
+    @tasks[task_id] or raise "task #{task_id} not found"
   end
 
   def exe
