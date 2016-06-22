@@ -1,5 +1,4 @@
-require 'chart/proto'
-require 'helper/symbol'
+require 'xy'
 
 class X
   def initialize objs
@@ -10,21 +9,12 @@ class X
     X.new value.select(&blk)
   end
 
+  def group_by &blk
+    XY.new value.group_by(&blk)
+  end
+
   def value
     @objs
-  end
-
-  def group_by opts={}, &blk
-    type = getChartType(opts[:type])
-    type.new opts.merge({data: @objs}), &blk
-  end
-
-  private
-
-  def getChartType type
-    require "charts/#{type.underscore}"
-    raise "can not find chart type #{type} in #{Proto.list}" if Proto[type].nil?
-    Proto[type]
   end
 
 end
