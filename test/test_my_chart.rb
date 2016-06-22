@@ -11,7 +11,13 @@ class TestMyChart < MiniTest::Unit::TestCase
   def test_select
     assert_equal [3,4,5,6,7,8,9,10], @mc.value(:ge3)
     assert_equal [2,4,6,8,10], @mc.value(:x2)
-    assert_equal [4,6,8,10], @mc.value(:even_and_ge3)
+    assert_equal [4,6,8,10], @mc.value(:even_from_ge3)
+  end
+
+  def test_group_by
+    assert_equal ({'even' => [2,4,6,8,10], 'odd' => [1,3,5,7,9]}), @mc.value(:odd_or_even)
+    assert_equal ({'even' => [4,6,8,10], 'odd' => [3,5,7,9]}), @mc.value(:ge3_into_odd_or_even)
+    assert_equal ({'divisible_by_3' => [6], 'not_divisible_by_3' => [4,8,10]}), @mc.value(:even_from_ge3_into_divisible_by_3)
   end
 
   def setup
@@ -27,6 +33,18 @@ class TestMyChart < MiniTest::Unit::TestCase
       end
 
       select :x2, &:even?
+
+      group :even_from_ge3, by: :divisible_by_3 do |n|
+        (n % 3 == 0) ? 'divisible_by_3' : 'not_divisible_by_3'
+      end
+
+      group :ge3, by: :odd_or_even do |n|
+        n.odd? ? 'odd' : 'even'
+      end
+
+      group by: :odd_or_even do |n|
+        n.odd? ? 'odd' : 'even'
+      end
 
     end
 
