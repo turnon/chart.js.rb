@@ -1,4 +1,3 @@
-require 'material_pool'
 require 'tasks'
 require 'x'
 require 'erb'
@@ -22,16 +21,13 @@ module MyChart
   class Chart
 
     def initialize
-      @materials = MaterialPool.new
       @tasks = Tasks.new
     end
 
     def material dat=nil, &blk
       @tasks.add ALL_DATA do |pre|
         objs = dat.nil? ? blk.call : dat
-        x = X.new(objs)
-        @materials.put ALL_DATA, X.new(objs)
-        x
+        X.new(objs)
       end
     end
 
@@ -44,9 +40,7 @@ module MyChart
         production_id = name
       end
       @tasks.add production_id, depends_on: material_id do |pre|
-        selected = pre.select(&blk)
-        @materials.put production_id, selected
-        selected
+        pre.select &blk
       end
     end
 
@@ -59,14 +53,6 @@ module MyChart
     end
 
     private
-
-    def put name, material
-      @materials.put name.to_sym, material
-    end
-
-    def all_data
-      get ALL_DATA
-    end
 
     def html_template
       File.join File.dirname(__FILE__), 'tmpl.htm'
