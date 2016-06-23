@@ -27,6 +27,11 @@ class TestMyChart < MiniTest::Unit::TestCase
     assert_equal ({1 => [1,4,7,10], 2 => [2,5,8]}), @mc.value(:not_divisible_by_3_from_mod3)
   end
 
+  def test_xy_to_xyz
+    exp = {'even' => {'gt3' => [4,6,8,10], 'not_gt3' => [2]}, 'odd' => {'gt3' => [5,7,9], 'not_gt3' => [1,3]}}
+    assert_equal exp, @mc.value(:odd_or_even_into_greater_than_3)
+  end
+
   def setup
     @mc = MyChart.js do
       material [1,2,3,4,5,6,7,8,9,10]
@@ -61,6 +66,9 @@ class TestMyChart < MiniTest::Unit::TestCase
         not mod3.zero?
       end
 
+      group :odd_or_even, by: :greater_than_3 do |n|
+        n > 3 ? 'gt3' : 'not_gt3'
+      end
     end
 
     @mc1 = MyChart.js do
