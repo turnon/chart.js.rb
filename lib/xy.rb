@@ -17,4 +17,12 @@ class XY
     @objs_hash
   end
 
+  def labels
+    value.keys
+  end
+
+  def datasets
+    value.values.map{|objs| objs.count}
+  end
+
 end

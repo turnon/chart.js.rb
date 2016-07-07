@@ -23,6 +23,14 @@ class TestXY < MiniTest::Unit::TestCase
     assert_equal exp, amount_lt_7.value
   end
 
+  def test_labels
+    assert_equal [0,1,2], @xy.labels
+  end
+
+  def test_datasets
+    assert_equal [6,7,7], @xy.datasets
+  end
+
   def setup
     @xy = XY.new({0 => [3,6,9,12,15,18], 1 => [1,4,7,10,13,16,19], 2 => [2,5,8,11,14,17,20]})
   end
