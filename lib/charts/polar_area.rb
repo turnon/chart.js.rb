@@ -1,13 +1,9 @@
+require 'chart/proto'
+
 class PolarArea < Proto
 
-  exclude Z
-
-  def dataset_options
-    {fill: false}
-  end
-
-  def chart_options
-    {}
+  def concrete_type
+    :polarArea
   end
 
 end

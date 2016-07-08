@@ -1,13 +1,21 @@
+require 'chart/proto'
+
 class Bar < Proto
 
-  include Z
-
-  def dataset_options
-    {fill: false}
+  def concrete_type
+    :bar
   end
 
-  def chart_options
-    {}
+  def concrete_options
+    {
+       scales: {
+         yAxes: [{
+             ticks: {
+                 beginAtZero:true
+             }
+         }]
+       }
+     }
   end
 
 end

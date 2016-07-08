@@ -22,7 +22,7 @@ class XY
   end
 
   def datasets
-    value.values.map{|objs| objs.count}
+    [{label: 'xy', data: value.values.map{|objs| objs.count}}]
   end
 
 end
