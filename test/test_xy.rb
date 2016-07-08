@@ -28,7 +28,7 @@ class TestXY < MiniTest::Unit::TestCase
   end
 
   def test_datasets
-    assert_equal [6,7,7], @xy.datasets
+    assert_equal [{:label=>"xy", :data=>[6, 7, 7]}], @xy.datasets
   end
 
   def setup
