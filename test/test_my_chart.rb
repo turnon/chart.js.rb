@@ -42,6 +42,11 @@ class TestMyChart < MiniTest::Unit::TestCase
     assert_includes inst_ms, :radar
   end
 
+  def test_concrete_chart_method
+    exp = {'even' => {'gt3' => [4,6,8,10], 'not_gt3' => [2]}, 'odd' => {'gt3' => [5,7,9], 'not_gt3' => [1,3]}}
+    assert_equal exp, @mc.value(:odd_or_even_into_greater_than_three)
+  end
+
   def setup
     @mc = MyChart.js do
       material [1,2,3,4,5,6,7,8,9,10]
@@ -78,6 +83,12 @@ class TestMyChart < MiniTest::Unit::TestCase
 
       group :odd_or_even, by: :greater_than_3 do |n|
         n > 3 ? 'gt3' : 'not_gt3'
+      end
+
+      bar do
+        group :odd_or_even, by: :greater_than_three do |n|
+          n > 3 ? 'gt3' : 'not_gt3'
+        end
       end
     end
 
