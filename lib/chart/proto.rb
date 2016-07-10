@@ -78,3 +78,10 @@ class Proto
   end
 
 end
+
+# load default charts
+
+charts = File.expand_path("../../charts/*", __FILE__)
+Dir[charts].each do |c|
+  require c
+end

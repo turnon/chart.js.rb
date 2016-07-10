@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'chart/proto'
+require 'xyz'
 
 class TestProto < MiniTest::Unit::TestCase
 
@@ -16,6 +17,15 @@ class TestProto < MiniTest::Unit::TestCase
 
     datasets_opt = json.scan /(datasets)/
     assert_equal 1, datasets_opt.length
+  end
+
+  def test_auto_load_default_charts
+    assert_includes Proto.derive, :line
+    assert_includes Proto.derive, :bar
+    assert_includes Proto.derive, :pie
+    assert_includes Proto.derive, :radar
+    assert_includes Proto.derive, :doughnut
+    assert_includes Proto.derive, :polarArea
   end
 
   def setup
