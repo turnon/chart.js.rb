@@ -1,6 +1,7 @@
 require 'tasks'
 require 'x'
 require 'erb'
+require 'chart/proto'
 
 module MyChart
 
@@ -20,6 +21,12 @@ module MyChart
   GROUPBY_CONJOIN = :_into_
 
   class Chart
+
+    Proto.derive.each do |c|
+      define_method c do |&group|
+	group.call
+      end
+    end
 
     def initialize
       @tasks = Tasks.new

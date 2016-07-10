@@ -32,6 +32,16 @@ class TestMyChart < MiniTest::Unit::TestCase
     assert_equal exp, @mc.value(:odd_or_even_into_greater_than_3)
   end
 
+  def test_methods_for_concrete_chart_type
+    inst_ms = MyChart::Chart.instance_methods
+    assert_includes inst_ms, :line
+    assert_includes inst_ms, :bar
+    assert_includes inst_ms, :pie
+    assert_includes inst_ms, :doughnut
+    assert_includes inst_ms, :polarArea
+    assert_includes inst_ms, :radar
+  end
+
   def setup
     @mc = MyChart.js do
       material [1,2,3,4,5,6,7,8,9,10]
