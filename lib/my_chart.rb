@@ -24,12 +24,13 @@ module MyChart
 
     Proto.derive.each do |c|
       define_method c do |&group|
-	group.call
+        @chart_type_and_id_s << [c, group.call]
       end
     end
 
     def initialize
       @tasks = Tasks.new
+      @chart_type_and_id_s = []
     end
 
     def material dat=nil, &blk
@@ -51,10 +52,14 @@ module MyChart
       @tasks.add arg.production_id, depends_on: arg.material_id do |pre|
         pre.group_by &blk
       end
+      arg.production_id
     end
+
+    attr_reader :charts
 
     def generate
       @tasks.exe
+      @charts = @chart_type_and_id_s.map{|i| Proto.concrete i[0],i[1] }
     end
 
     def value name

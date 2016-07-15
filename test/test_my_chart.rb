@@ -47,6 +47,10 @@ class TestMyChart < MiniTest::Unit::TestCase
     assert_equal exp, @mc.value(:odd_or_even_into_greater_than_three)
   end
 
+  def test_create_bar_chart
+    assert_includes @mc.charts.map{|c| c.class}, Bar
+  end
+
   def setup
     @mc = MyChart.js do
       material [1,2,3,4,5,6,7,8,9,10]
