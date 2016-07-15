@@ -12,6 +12,10 @@ class Proto
     def derive
       @concretes.keys
     end
+
+    def concrete name, grouped_data
+      @concretes[name].new grouped_data
+    end
   end
 
   def initialize grouped_data
