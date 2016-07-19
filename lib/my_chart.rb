@@ -20,9 +20,9 @@ module MyChart
 
   class Chart
 
-    Proto.derive.each do |c|
-      define_method c do |&group|
-        @chart_type_and_id_s << [c, group.call]
+    Proto.derive.each do |chart_cmd|
+      define_method chart_cmd do |&group_cmd|
+        @chart_type_and_id_s << [chart_cmd, group_cmd.call]
       end
     end
 
@@ -57,7 +57,7 @@ module MyChart
 
     def generate
       @tasks.exe
-      @charts = @chart_type_and_id_s.map{|i| Proto.concrete i[0],i[1] }
+      @charts = @chart_type_and_id_s.map{|type_and_id| Proto.concrete *type_and_id }
     end
 
     def value name
