@@ -17,8 +17,6 @@ module MyChart
   end
 
   ALL_DATA = Tasks::ROOT
-  SELECTFROM_CONJOIN = :_from_
-  GROUPBY_CONJOIN = :_into_
 
   class Chart
 
@@ -71,15 +69,34 @@ module MyChart
       attr_reader :material_id, :production_id
 
       def initialize *args
-        if args.size == 2 and args[1].kind_of? Hash and args[1][:by]
+        if specified_material? args
           @material_id = args[0]
-          @production_id = [@material_id, GROUPBY_CONJOIN, args[1][:by]].join.to_sym
-        elsif args.size == 1 and args[0].kind_of? Hash and args[0][:by]
+          @production_id = concat_production_id @material_id, args[1][:by]
+        elsif not_specified_material? args
           @material_id = ALL_DATA
-          @production_id = args[0][:by]
+          @production_id = [:GROUP, :BY, args[0][:by]].join('_').to_sym
         else
           raise "invalid arguments for group_by : #{args}"
         end
+      end
+
+      private
+
+      def specified_material? args
+        args.size == 2 and args[1].kind_of? Hash and args[1][:by]
+      end
+
+      def not_specified_material? args
+        args.size == 1 and args[0].kind_of? Hash and args[0][:by]
+      end
+
+      def concat_production_id material, by
+        string = if material =~ /^GROUP/
+                   [material, :AND_THEN, :GROUP, :BY, by]
+                 else
+                   [:GROUP, material, :BY, by]
+                 end
+        string.join('_').to_sym
       end
     end
 
@@ -90,7 +107,7 @@ module MyChart
       def initialize *args
         if args.size == 2 and args[1].kind_of? Hash and args[1][:from]
           @material_id = args[1][:from]
-          @production_id = [args[0], SELECTFROM_CONJOIN, material_id].join.to_sym
+          @production_id = [args[0], :FROM, material_id].join('_').to_sym
         elsif args.size == 1
           @material_id = ALL_DATA
           @production_id = args[0]
