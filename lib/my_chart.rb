@@ -69,10 +69,10 @@ module MyChart
       attr_reader :material_id, :production_id
 
       def initialize *args
-        if specified_material? args
+        if material_specified? args
           @material_id = args[0]
           @production_id = concat_production_id @material_id, args[1][:by]
-        elsif not_specified_material? args
+        elsif material_not_specified? args
           @material_id = ALL_DATA
           @production_id = [:GROUP, :BY, args[0][:by]].join('_').to_sym
         else
@@ -82,11 +82,11 @@ module MyChart
 
       private
 
-      def specified_material? args
+      def material_specified? args
         args.size == 2 and args[1].kind_of? Hash and args[1][:by]
       end
 
-      def not_specified_material? args
+      def material_not_specified? args
         args.size == 1 and args[0].kind_of? Hash and args[0][:by]
       end
 
