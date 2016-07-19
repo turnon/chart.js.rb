@@ -1,6 +1,14 @@
 module MyChart
   class Chart
 
+    def group *args, &blk
+      arg = GroupByARGV.new *args
+      tasks.add arg.production_id, depends_on: arg.material_id do |pre|
+        pre.group_by &blk
+      end
+      arg.production_id
+    end
+
     class GroupByARGV
 
       attr_reader :material_id, :production_id
