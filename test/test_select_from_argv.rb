@@ -14,6 +14,6 @@ class TestSelectFromARGV < MiniTest::Unit::TestCase
   def test_base_on_specified_data
     arg = SelectFromARGV.new :male, from: :children
     assert_equal :children, arg.material_id
-    assert_equal :male_from_children, arg.production_id
+    assert_equal :male_FROM_children, arg.production_id
   end
 end
