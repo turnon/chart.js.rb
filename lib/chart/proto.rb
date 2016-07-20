@@ -18,6 +18,8 @@ class Proto
     end
   end
 
+  attr_accessor :id
+
   def initialize grouped_data
     @grouped_data = grouped_data
   end

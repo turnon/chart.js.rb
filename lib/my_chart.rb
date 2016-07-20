@@ -27,7 +27,11 @@ module MyChart
 
     def generate
       tasks.exe
-      @charts = @chart_type_and_id_s.map{|type_and_id| Proto.concrete *type_and_id }
+      @charts = @chart_type_and_id_s.map do |type_and_id|
+        chart = Proto.concrete *type_and_id
+        chart.id = [*type_and_id].join('_').to_sym
+        chart
+      end
       output_files and output_files.each do |path|
         File.open path, 'w:utf-8' do |f|
           f.puts 111

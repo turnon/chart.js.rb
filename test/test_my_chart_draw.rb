@@ -21,6 +21,7 @@ class TestMyChartDraw < MiniTest::Unit::TestCase
 
   def test_create_bar_chart
     assert_includes @mc.charts.map{|c| c.class}, Bar
+    assert_includes @mc.charts.map{|c| c.id}, :bar_GROUP_BY_odd_or_even_AND_THEN_GROUP_BY_greater_than_three
   end
 
   def test_define_output_file
