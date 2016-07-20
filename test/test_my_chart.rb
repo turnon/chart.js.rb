@@ -66,7 +66,7 @@ class TestMyChart < MiniTest::Unit::TestCase
 
   end
 
-  #def teardown
-  #  File.delete @file if File.exist? @file
-  #end
+  def teardown
+    File.delete @file if File.exist? @file
+  end
 end
