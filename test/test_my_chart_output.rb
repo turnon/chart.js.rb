@@ -9,8 +9,11 @@ class TestMyChart
   end
 
   def test_output_bar_to_file
-    content = File.read @file
-    assert_match /"type":"bar"."data":/, content
+    assert_match /"type":"bar"."data":/, @content
+  end
+
+  def test_canvas
+    assert_match /<html.*<canvas.*script>.*html>/m, @content
   end
 
 end
