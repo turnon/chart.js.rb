@@ -41,13 +41,13 @@ module MyChart
 
     private
 
-    def type_and_value *type_and_id
+    def type_and_labels_datasets *type_and_id
       [type_and_id[0], result(type_and_id[1])]
     end
 
     def generate_charts
       @charts = @chart_type_and_id_s.map do |type_and_id|
-        chart = Proto.concrete *type_and_value(*type_and_id)
+        chart = Proto.concrete *type_and_labels_datasets(*type_and_id)
         chart.id = [*type_and_id].join('_').to_sym
         chart
       end
