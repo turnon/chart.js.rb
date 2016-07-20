@@ -28,6 +28,11 @@ module MyChart
     def generate
       tasks.exe
       @charts = @chart_type_and_id_s.map{|type_and_id| Proto.concrete *type_and_id }
+      output_files and output_files.each do |path|
+        File.open path, 'w:utf-8' do |f|
+          f.puts 111
+        end
+      end
     end
 
     def value name
@@ -48,3 +53,4 @@ require 'dsl/material'
 require 'dsl/select'
 require 'dsl/group'
 require 'dsl/draw'
+require 'dsl/output'

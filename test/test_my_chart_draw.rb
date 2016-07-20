@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'my_chart'
+require 'tempfile'
 
 class TestMyChartDraw < MiniTest::Unit::TestCase
 
@@ -22,7 +23,17 @@ class TestMyChartDraw < MiniTest::Unit::TestCase
     assert_includes @mc.charts.map{|c| c.class}, Bar
   end
 
+  def test_define_output_file
+    assert_includes @mc.output_files, @file
+  end
+
+  def test_can_create_file
+    assert File.exist? @file
+  end
+
   def setup
+
+    file = [Dir.tmpdir, Time.now.strftime('%Y%m%d%H%M%S') + '.html'].join(File::SEPARATOR)
 
     @mc = MyChart.js do
       material [1,2,3,4,5,6,7,8,9,10]
@@ -36,7 +47,16 @@ class TestMyChartDraw < MiniTest::Unit::TestCase
           n > 3 ? 'gt3' : 'not_gt3'
         end
       end
+
+      output file
+
     end
 
+    @file = file
+
+  end
+
+  def teardown
+    File.delete @file if File.exist? @file
   end
 end
