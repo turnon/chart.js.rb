@@ -1,6 +1,13 @@
 module MyChart
   class Chart
 
+    def select *args, &blk
+      arg = SelectFromARGV.new *args
+      tasks.add arg.production_id, depends_on: arg.material_id do |pre|
+        pre.select &blk
+      end
+    end
+
     class SelectFromARGV
 
       attr_reader :material_id, :production_id
