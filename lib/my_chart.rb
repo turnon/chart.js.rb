@@ -1,10 +1,5 @@
 require 'tasks'
-require 'x'
-require 'my_chart_group_by_argv'
-require 'my_chart_select_from_argv'
-require 'x'
 require 'erb'
-require 'chart/proto'
 
 module MyChart
 
@@ -23,48 +18,20 @@ module MyChart
 
   class Chart
 
-    Proto.derive.each do |chart_cmd|
-      define_method chart_cmd do |&group_cmd|
-        @chart_type_and_id_s << [chart_cmd, group_cmd.call]
-      end
-    end
+    attr_reader :tasks, :charts
 
     def initialize
       @tasks = Tasks.new
       @chart_type_and_id_s = []
     end
 
-    def material dat=nil, &blk
-      @tasks.add ALL_DATA do |pre|
-        objs = dat.nil? ? blk.call : dat
-        X.new(objs)
-      end
-    end
-
-    def select *args, &blk
-      arg = SelectFromARGV.new *args
-      @tasks.add arg.production_id, depends_on: arg.material_id do |pre|
-        pre.select &blk
-      end
-    end
-
-    def group *args, &blk
-      arg = GroupByARGV.new *args
-      @tasks.add arg.production_id, depends_on: arg.material_id do |pre|
-        pre.group_by &blk
-      end
-      arg.production_id
-    end
-
-    attr_reader :charts
-
     def generate
-      @tasks.exe
+      tasks.exe
       @charts = @chart_type_and_id_s.map{|type_and_id| Proto.concrete *type_and_id }
     end
 
     def value name
-      @tasks[name.to_sym].result.value
+      tasks[name.to_sym].result.value
     end
 
     private
@@ -76,3 +43,8 @@ module MyChart
   end
 
 end
+
+require 'dsl/material'
+require 'dsl/select'
+require 'dsl/group'
+require 'dsl/draw'
