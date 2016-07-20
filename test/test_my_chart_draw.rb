@@ -32,6 +32,11 @@ class TestMyChartDraw < MiniTest::Unit::TestCase
     assert File.exist? @file
   end
 
+  def test_output_bar_to_file
+    content = File.read @file
+    assert_match /"type":"bar"."data":/, content
+  end
+
   def setup
 
     file = [Dir.tmpdir, Time.now.strftime('%Y%m%d%H%M%S') + '.html'].join(File::SEPARATOR)
