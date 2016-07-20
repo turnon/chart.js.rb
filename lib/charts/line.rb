@@ -1,13 +1,13 @@
+require 'chart/proto'
+
 class Line < Proto
 
-  include Z
-  
-  def dataset_options
-    {fill: false}
+  def concrete_type
+    :line
   end
 
-  def chart_options
-    {}
+  def concrete_style
+    {fill:false, lineTension: 0.1}
   end
 
 end
