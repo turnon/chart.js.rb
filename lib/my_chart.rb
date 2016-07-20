@@ -56,15 +56,15 @@ module MyChart
     def generate_files
       output_files and output_files.each do |path|
         File.open path, 'w:utf-8' do |f|
-          charts.each do |chart|
-            f.puts chart.json
-          end
+          f.puts filled_template
         end
       end
     end
 
-    def html_template
-      File.join File.dirname(__FILE__), 'tmpl.htm'
+    def filled_template
+      return @filled if @filled
+      tmpl_file = File.join File.dirname(__FILE__), 'tmpl.htm'
+      @filled = ERB.new(File.read tmpl_file).result(binding)
     end
 
   end

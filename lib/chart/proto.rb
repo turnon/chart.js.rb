@@ -43,6 +43,17 @@ class Proto
     }.to_json
   end
 
+  def iife
+    "(function(){
+      var ctx = document.getElementById('#{id}');
+      var myChart = new Chart(ctx, #{json});
+    })();"
+  end
+
+  def default_html
+    "<div><canvas id='#{id}' width='800' height='300'></canvas><script>#{iife}</script></div>"
+  end
+
   def concrete_type
   end
 

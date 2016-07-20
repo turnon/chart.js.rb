@@ -28,6 +28,10 @@ class TestProto < MiniTest::Unit::TestCase
     assert_includes Proto.derive, :polarArea
   end
 
+  def test_iife
+    assert_match %r$\(function\(\){.*}\)\(\);$m, @proto.iife
+  end
+
   def setup
     xyz = XYZ.new({0 => {'even' => [6,12,18], 'odd' => [3,9,15]},
            1 => {'even' => [4,10,16], 'odd' => [1,7,13,19]},
