@@ -1,6 +1,7 @@
 require 'chart/rainbow'
 require 'helper/string'
 require 'json'
+require 'xyz'
 
 class Proto
 
@@ -16,11 +17,18 @@ class Proto
     def concrete name, grouped_data
       @concretes[name].new grouped_data
     end
+
+    def no_z_axis
+      define_method :no_z_axis? do
+        true
+      end
+    end
   end
 
   attr_accessor :id
 
   def initialize grouped_data
+    raise Exception, "#{type} has no z axis" if grouped_data.kind_of? XYZ and no_z_axis?
     @grouped_data = grouped_data
   end
 
@@ -92,6 +100,10 @@ class Proto
     [datasets[0].merge({
       backgroundColor: Rainbow[labels.size]
     })]
+  end
+
+  def no_z_axis?
+    false
   end
 
 end
