@@ -6,7 +6,6 @@ module MyChart
       tasks.add arg.production_id, depends_on: arg.material_id do |pre|
         pre.group_by &blk
       end
-      arg.production_id
     end
 
     class GroupByARGV

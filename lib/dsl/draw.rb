@@ -4,8 +4,9 @@ module MyChart
   class Chart
 
     Proto.derive.each do |chart_cmd|
-      define_method chart_cmd do |&group_cmd|
-        @chart_type_and_id_s << [chart_cmd, group_cmd.call]
+      define_method chart_cmd do |opts={}, &group_cmd|
+        constructor = {type: chart_cmd, task: group_cmd.call, opts: opts}
+        chart_constructors << constructor
       end
     end
 

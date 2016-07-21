@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'charts/pie'
+require 'xy'
 
 class TestPie < MiniTest::Unit::TestCase
 
@@ -14,6 +15,6 @@ class TestPie < MiniTest::Unit::TestCase
 
   def setup
     xy = XY.new({:a => [1,2,3,4,5,6], :b => [1,2,3], :c => [1,2,3,4], :d => [1], :f => [1,2]})
-    @ch = Pie.new xy
+    @ch = Pie.new data: xy
   end
 end

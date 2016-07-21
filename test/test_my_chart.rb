@@ -45,7 +45,7 @@ class TestMyChart < MiniTest::Unit::TestCase
         n > 3 ? 'gt3' : 'not_gt3'
       end
 
-      bar do
+      bar w: 1280, h: 720 do
         group :GROUP_BY_odd_or_even, by: :greater_than_three do |n|
           n > 3 ? 'gt3' : 'not_gt3'
         end

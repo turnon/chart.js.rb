@@ -20,6 +20,6 @@ class TestRadar < MiniTest::Unit::TestCase
            3 => {'even' => [8,18], 'odd' => [3,13,93]},
            4 => {'even' => [4,14,94], 'odd' => [9,19]}
            })
-    @ch = Radar.new mod5
+    @ch = Radar.new data: mod5
   end
 end

@@ -42,8 +42,8 @@ class Tasks
   def add id=nil, params={}, &action
     t = Task.new complete(id, params), &action
     raise "already has task #{t.id}" if @tasks[t.id]
-    @tasks[t.id] = t
     t.tasks = self
+    @tasks[t.id] = t
   end
 
   def [] task_id
