@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'charts/line'
+require 'mock_data'
 
 class TestLine < MiniTest::Unit::TestCase
 
@@ -13,9 +14,6 @@ class TestLine < MiniTest::Unit::TestCase
   end
 
   def setup
-    xyz = XYZ.new({0 => {'even' => [6,12,18], 'odd' => [3,9,15]},
-           1 => {'even' => [4,10,16], 'odd' => [1,7,13,19]},
-           2 => {'even' => [2,8,14,20], 'odd' => [5,11,17]}})
-    @ch = Line.new xyz
+    @ch = Line.new mock_data_xyz
   end
 end
