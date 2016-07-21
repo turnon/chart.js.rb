@@ -1,11 +1,14 @@
 require 'chart/proto'
+require 'chart_task'
 
 module MyChart
   class Chart
 
     Proto.derive.each do |chart_cmd|
-      define_method chart_cmd do |&group_cmd|
-        @chart_type_and_id_s << [chart_cmd, group_cmd.call]
+      define_method chart_cmd do |opts={}, &group_cmd|
+        task = {type: chart_cmd, data_task: group_cmd.call}.merge opts
+        chart_task = ChartTask.new task
+        chart_constructors << chart_task
       end
     end
 

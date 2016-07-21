@@ -14,8 +14,10 @@ class Proto
       @concretes.keys
     end
 
-    def concrete name, grouped_data
-      @concretes[name].new grouped_data
+    def concrete constructor
+      chart_class = @concretes[constructor.type]
+      raise Exception, "no such chart: #{constructor.type}" unless chart_class
+      chart_class.new constructor
     end
 
     def no_z_axis
@@ -25,11 +27,15 @@ class Proto
     end
   end
 
-  attr_accessor :id
+  attr_reader :id
 
-  def initialize grouped_data
+  def initialize constructor
+    grouped_data = constructor.data
     raise Exception, "#{type} has no z axis" if grouped_data.kind_of? XYZ and no_z_axis?
+    @id = constructor.id
     @grouped_data = grouped_data
+    @width = constructor.w
+    @height = constructor.h
   end
 
   def labels
@@ -59,7 +65,15 @@ class Proto
   end
 
   def default_html
-    "<div><canvas id='#{id}' width='800' height='300'></canvas><script>#{iife}</script></div>"
+    "<div><canvas id='#{id}' width='#{width}' height='#{height}'></canvas><script>#{iife}</script></div>"
+  end
+
+  def width
+    @width || 800
+  end
+
+  def height
+    @height || 300
   end
 
   def concrete_type
