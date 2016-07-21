@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'charts/polar_area'
+require 'xy'
 
 class TestPolarArea < MiniTest::Unit::TestCase
 
@@ -17,13 +18,13 @@ class TestPolarArea < MiniTest::Unit::TestCase
            1 => {'even' => [4,10,16], 'odd' => [1,7,13,19]},
            2 => {'even' => [2,8,14,20], 'odd' => [5,11,17]}})
     ex = assert_raises(Exception) do
-      PolarArea.new xyz
+      PolarArea.new data: xyz
     end
     assert_equal 'polarArea has no z axis', ex.message
   end
 
   def setup
     xy = XY.new({:a => [1,2,3,4,5,6], :b => [1,2,3], :c => [1,2,3,4], :d => [1], :f => [1,2]})
-    @ch = PolarArea.new xy
+    @ch = PolarArea.new data: xy
   end
 end

@@ -14,8 +14,10 @@ class Proto
       @concretes.keys
     end
 
-    def concrete name, grouped_data
-      @concretes[name].new grouped_data
+    def concrete constructor
+      c = constructor.dup
+      name = c.delete :type
+      @concretes[name].new c
     end
 
     def no_z_axis
@@ -25,11 +27,16 @@ class Proto
     end
   end
 
-  attr_accessor :id
+  attr_reader :id
 
-  def initialize grouped_data
+  def initialize constructor
+    grouped_data = constructor[:data]
+    opts = constructor[:opts] || {}
     raise Exception, "#{type} has no z axis" if grouped_data.kind_of? XYZ and no_z_axis?
+    @id = constructor[:id]
     @grouped_data = grouped_data
+    @width = opts[:w]
+    @height = opts[:h]
   end
 
   def labels
@@ -59,7 +66,15 @@ class Proto
   end
 
   def default_html
-    "<div><canvas id='#{id}' width='800' height='300'></canvas><script>#{iife}</script></div>"
+    "<div><canvas id='#{id}' width='#{width}' height='#{height}'></canvas><script>#{iife}</script></div>"
+  end
+
+  def width
+    @width || 800
+  end
+
+  def height
+    @height || 300
   end
 
   def concrete_type

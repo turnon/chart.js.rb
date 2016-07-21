@@ -13,7 +13,11 @@ class TestMyChart
   end
 
   def test_canvas
-    assert_match /<html.*<canvas.*script>.*html>/m, @content
+    assert_match %r{<html.*<canvas.*script>.*html>}m, @content
+  end
+
+  def test_canvas_size
+    assert_match %r{width='1280'.*height='720'}m, @content
   end
 
 end

@@ -18,11 +18,11 @@ module MyChart
 
   class Chart
 
-    attr_reader :tasks, :charts
+    attr_reader :tasks, :charts, :chart_constructors
 
     def initialize
       @tasks = Tasks.new
-      @chart_type_and_id_s = []
+      @chart_constructors = []
     end
 
     def generate
@@ -41,14 +41,15 @@ module MyChart
 
     private
 
-    def type_and_labels_datasets *type_and_id
-      [type_and_id[0], result(type_and_id[1])]
+    def evaled_task_constructor constructor
+      c = constructor.dup
+      task = c.delete :task
+      c.merge({data: task.result, id: [constructor[:type], task.id].join('_').to_sym})
     end
 
     def generate_charts
-      @charts = @chart_type_and_id_s.map do |type_and_id|
-        chart = Proto.concrete *type_and_labels_datasets(*type_and_id)
-        chart.id = [*type_and_id].join('_').to_sym
+      @charts = chart_constructors.map do |c|
+        chart = Proto.concrete evaled_task_constructor(c)
         chart
       end
     end
