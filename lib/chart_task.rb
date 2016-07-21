@@ -1,5 +1,4 @@
 require 'ostruct'
-require 'delegate'
 
 class ChartTask
 
