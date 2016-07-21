@@ -15,9 +15,9 @@ class Proto
     end
 
     def concrete constructor
-      c = constructor.dup
-      name = c.delete :type
-      @concretes[name].new c
+      chart_class = @concretes[constructor.type]
+      raise Exception, "no such chart: #{constructor.type}" unless chart_class
+      chart_class.new constructor
     end
 
     def no_z_axis
@@ -30,13 +30,12 @@ class Proto
   attr_reader :id
 
   def initialize constructor
-    grouped_data = constructor[:data]
-    opts = constructor[:opts] || {}
+    grouped_data = constructor.data
     raise Exception, "#{type} has no z axis" if grouped_data.kind_of? XYZ and no_z_axis?
-    @id = constructor[:id]
+    @id = constructor.id
     @grouped_data = grouped_data
-    @width = opts[:w]
-    @height = opts[:h]
+    @width = constructor.w
+    @height = constructor.h
   end
 
   def labels

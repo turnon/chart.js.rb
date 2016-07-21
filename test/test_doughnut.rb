@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'charts/doughnut'
-require 'xy'
+require 'mock_data'
 
 class TestDoughnut < MiniTest::Unit::TestCase
 
@@ -14,7 +14,6 @@ class TestDoughnut < MiniTest::Unit::TestCase
   end
 
   def setup
-    xy = XY.new({:a => [1,2,3,4,5,6], :b => [1,2,3], :c => [1,2,3,4], :d => [1], :f => [1,2]})
-    @ch = Doughnut.new data: xy
+    @ch = Doughnut.new mock_data_xy
   end
 end

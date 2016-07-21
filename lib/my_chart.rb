@@ -41,16 +41,9 @@ module MyChart
 
     private
 
-    def evaled_task_constructor constructor
-      c = constructor.dup
-      task = c.delete :task
-      c.merge({data: task.result, id: [constructor[:type], task.id].join('_').to_sym})
-    end
-
     def generate_charts
-      @charts = chart_constructors.map do |c|
-        chart = Proto.concrete evaled_task_constructor(c)
-        chart
+      @charts = chart_constructors.map do |constructor|
+        constructor.build
       end
     end
 
