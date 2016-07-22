@@ -1,17 +1,16 @@
 require 'minitest/autorun'
 require 'my_chart'
-require 'tempfile'
+require 'file_op'
 
 class TestMyChart < MiniTest::Unit::TestCase
+
+  include FileOp
 
   def setup
 
     file = tmpfile_path
     file2 = tmpfile_path 2
     file3 = tmpfile_path 3
-    file4 = tmpfile_path 4
-
-    tmpl = mock_tmpl
 
     @mc = MyChart.js do
       material [1,2,3,4,5,6,7,8,9,10]
@@ -58,19 +57,16 @@ class TestMyChart < MiniTest::Unit::TestCase
 
       output file
       output file2, file3
-      #output file4, tmpl: tmpl
 
     end
 
     @file = file
     @file2 = file2
     @file3 = file3
-    @file4 = file4
 
     @content = read_f @file
     @content2 = read_f @file2
     @content3 = read_f @file3
-    #@content4 = read_f @file4
 
     @mc1 = MyChart.js do
       material do
@@ -81,30 +77,6 @@ class TestMyChart < MiniTest::Unit::TestCase
   end
 
   def teardown
-    del_f @file, @file2, @file3, @file4, @mock_tmpl
-  end
-
-  private
-
-  def tmpfile_path seq=''
-    File.join Dir.tmpdir, (Time.now.strftime('%Y%m%d%H%M%S') + '_' +  seq.to_s + '.html')
-  end
-
-  def read_f file
-    File.read file if File.exist? file
-  end
-
-  def del_f *files
-    files.each do |f|
-      File.delete f if File.exist? f
-    end
-  end
-
-  def mock_tmpl
-    return @mock_tmpl if @mock_tmpl
-    @mock_tmpl = tmpfile_path 999
-    File.open @mock_tmpl, 'w:utf-8' do |f|
-      f.puts 1234
-    end
+    del_f @file, @file2, @file3
   end
 end
