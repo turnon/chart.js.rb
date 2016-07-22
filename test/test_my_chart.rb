@@ -1,12 +1,16 @@
 require 'minitest/autorun'
 require 'my_chart'
-require 'tempfile'
+require 'file_op'
 
 class TestMyChart < MiniTest::Unit::TestCase
 
+  include FileOp
+
   def setup
 
-    file = [Dir.tmpdir, Time.now.strftime('%Y%m%d%H%M%S') + '.html'].join(File::SEPARATOR)
+    file = tmpfile_path
+    file2 = tmpfile_path 2
+    file3 = tmpfile_path 3
 
     @mc = MyChart.js do
       material [1,2,3,4,5,6,7,8,9,10]
@@ -52,11 +56,17 @@ class TestMyChart < MiniTest::Unit::TestCase
       end
 
       output file
+      output file2, file3
 
     end
 
     @file = file
-    @content = File.read @file if File.exist? @file
+    @file2 = file2
+    @file3 = file3
+
+    @content = read_f @file
+    @content2 = read_f @file2
+    @content3 = read_f @file3
 
     @mc1 = MyChart.js do
       material do
@@ -67,6 +77,6 @@ class TestMyChart < MiniTest::Unit::TestCase
   end
 
   def teardown
-    File.delete @file if File.exist? @file
+    del_f @file, @file2, @file3
   end
 end
