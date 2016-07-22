@@ -15,6 +15,7 @@ module MyChart
   end
 
   ALL_DATA = Tasks::ROOT
+  DEFAULT_TMPL = File.join File.dirname(__FILE__), 'tmpl.htm'
 
   class Chart
 
@@ -48,17 +49,17 @@ module MyChart
     end
 
     def generate_files
-      output_files and output_files.each do |path|
+      output_files and output_files.each do |path, tmpl|
         File.open path, 'w:utf-8' do |f|
-          f.puts filled_template
+          f.puts filled_template tmpl
         end
       end
     end
 
-    def filled_template
-      return @filled if @filled
-      tmpl_file = File.join File.dirname(__FILE__), 'tmpl.htm'
-      @filled = ERB.new(File.read tmpl_file).result(binding)
+    def filled_template tmpl_file
+      @filled ||= {}
+      return @filled[tmpl_file] if @filled[tmpl_file]
+      @filled[tmpl_file] = ERB.new(File.read tmpl_file).result(binding)
     end
 
   end
