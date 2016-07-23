@@ -14,6 +14,16 @@ class TestMyChartType < MiniTest::Unit::TestCase
     assert_includes concretes, :polarArea
   end
 
+  def test_undefined_chart_type
+    mock_task = MiniTest::Mock.new
+    mock_task.expect :type_class, :Asdfgh
+    mock_task.expect :type, :asdfgh
+    ex = assert_raises(Exception) do
+      MyChartType.concrete mock_task
+    end
+    assert_equal 'no such chart: asdfgh', ex.message
+  end
+
   def setup
     MyChartType.load
   end
