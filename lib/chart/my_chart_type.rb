@@ -12,8 +12,11 @@ module MyChartType
     end
 
     def concrete constructor
-      chart_class = const_get constructor.type_class
-      raise Exception, "no such chart: #{constructor.type}" unless chart_class
+      begin
+        chart_class = const_get constructor.type_class
+      rescue NameError
+        raise Exception, "no such chart: #{constructor.type}" unless chart_class
+      end
       chart_class.new constructor
     end
 
