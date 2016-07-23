@@ -1,6 +1,6 @@
 require 'chart/proto'
 
-class Bar < Proto
+class MyChartType::Bar
 
   def concrete_type
     :bar

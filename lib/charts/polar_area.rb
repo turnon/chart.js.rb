@@ -1,6 +1,6 @@
 require 'chart/proto'
 
-class PolarArea < Proto
+class MyChartType::PolarArea
 
   no_z_axis
 

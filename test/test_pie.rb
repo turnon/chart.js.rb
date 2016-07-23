@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'charts/pie'
+require 'chart/my_chart_type'
 require 'mock_data'
 
 class TestPie < MiniTest::Unit::TestCase
@@ -9,11 +9,8 @@ class TestPie < MiniTest::Unit::TestCase
     assert_match /"type":"pie"."data":/, json
   end
 
-  def test_derive    
-    assert_includes Proto.derive, :pie
-  end
-
   def setup
-    @ch = Pie.new mock_data_xy
+    MyChartType.load
+    @ch = MyChartType::Pie.new mock_data_xy
   end
 end

@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'charts/bar'
+require 'chart/my_chart_type'
 require 'mock_data'
 
 class TestBar < MiniTest::Unit::TestCase
@@ -9,11 +9,8 @@ class TestBar < MiniTest::Unit::TestCase
     assert_match /"type":"bar"."data":/, json
   end
 
-  def test_derive    
-    assert_includes Proto.derive, :bar
-  end
-
   def setup
-    @bar = Bar.new mock_data_xy
+    MyChartType.load
+    @bar = MyChartType::Bar.new mock_data_xy
   end
 end
