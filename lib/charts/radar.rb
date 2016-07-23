@@ -1,6 +1,6 @@
 require 'chart/proto'
 
-class Radar < Proto
+class MyChartType::Radar
 
   def concrete_type
     :radar
