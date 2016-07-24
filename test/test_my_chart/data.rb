@@ -1,4 +1,4 @@
-class TestMyChart
+module MyChartTest::Data
 
   def test_material
     assert_equal [1,2,3,4,5,6,7,8,9,10], @mc.value(MyChart::ALL_DATA)

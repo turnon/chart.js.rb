@@ -1,4 +1,4 @@
-class TestMyChart
+module MyChart::Output
 
   def test_define_output_file
     assert_includes @mc.output_files.flatten, @file

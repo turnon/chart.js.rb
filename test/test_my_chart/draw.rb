@@ -1,4 +1,4 @@
-class TestMyChart
+module MyChartTest::Draw
 
   def test_concrete_chart_method
     exp = {'even' => {'gt3' => [4,6,8,10], 'not_gt3' => [2]}, 'odd' => {'gt3' => [5,7,9], 'not_gt3' => [1,3]}}
