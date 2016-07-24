@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'chart/my_chart_type'
 require 'my_chart'
 
-class TestDraw
+class TestDraw < MiniTest::Unit::TestCase
   def test_methods_for_concrete_chart_type
     inst_ms = MyChart::Chart.instance_methods
     assert_includes inst_ms, :line
