@@ -7,8 +7,8 @@ module MyChartType
     include Enumerable
 
     def load
+      load_proto
       load_concrete_charts
-      add_charts_instance_methods
     end
 
     def concrete constructor
@@ -32,38 +32,29 @@ module MyChartType
     private
 
     def basename klass
-      klass.name.split(/::/)[1]
+      klass.name.split(/::/)[-1]
     end
-
 
     def load_concrete_charts
-      add_charts_class_methods
-      chart_definitions.each do |c|
-        require c
+      definitions.each do |c|
+        class_eval File.read(c)
       end
     end
 
-    def chart_definitions
+    def load_proto
+      require 'chart/proto'
+    end
+
+    def definitions
       path = File.expand_path("../../charts/*", __FILE__)
       Dir[path]
-    end
-
-    def add_charts_class_methods
-      require 'chart/class'
-    end
-    
-    def add_charts_instance_methods
-      require 'chart/proto'
-      custom_charts.each do |const|
-        const.include Proto
-      end
     end
 
     def custom_charts
       self.constants.map do |const|
         const_get(const)
       end.select do |klass|
-	klass != Proto
+        klass != Proto
       end
     end
 

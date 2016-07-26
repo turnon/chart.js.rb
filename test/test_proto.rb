@@ -27,7 +27,6 @@ class TestProto < MiniTest::Unit::TestCase
     @proto = Test.new mock_data_xyz
   end
 
-  class Test
-    include MyChartType::Proto
+  class Test < MyChartType::Proto
   end
 end
