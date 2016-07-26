@@ -1,6 +1,4 @@
-require 'chart/proto'
-
-class Doughnut < Proto
+class Doughnut < MyChartType::Proto
 
   def concrete_type
     :doughnut

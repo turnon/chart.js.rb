@@ -19,20 +19,14 @@ class TestProto < MiniTest::Unit::TestCase
     assert_equal 1, datasets_opt.length
   end
 
-  def test_auto_load_default_charts
-    assert_includes Proto.derive, :line
-    assert_includes Proto.derive, :bar
-    assert_includes Proto.derive, :pie
-    assert_includes Proto.derive, :radar
-    assert_includes Proto.derive, :doughnut
-    assert_includes Proto.derive, :polarArea
-  end
-
   def test_iife
     assert_match %r$\(function\(\){.*}\)\(\);$m, @proto.iife
   end
 
   def setup
-    @proto = Proto.new mock_data_xyz
+    @proto = Test.new mock_data_xyz
+  end
+
+  class Test < MyChartType::Proto
   end
 end

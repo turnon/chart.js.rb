@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'charts/doughnut'
+require 'chart/my_chart_type'
 require 'mock_data'
 
 class TestDoughnut < MiniTest::Unit::TestCase
@@ -9,11 +9,8 @@ class TestDoughnut < MiniTest::Unit::TestCase
     assert_match /"type":"doughnut"."data":/, json
   end
 
-  def test_derive    
-    assert_includes Proto.derive, :doughnut
-  end
-
   def setup
-    @ch = Doughnut.new mock_data_xy
+    MyChartType.load
+    @ch = MyChartType::Doughnut.new mock_data_xy
   end
 end

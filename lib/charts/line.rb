@@ -1,6 +1,4 @@
-require 'chart/proto'
-
-class Line < Proto
+class Line < MyChartType::Proto
 
   def concrete_type
     :line

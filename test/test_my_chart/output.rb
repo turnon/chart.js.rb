@@ -1,4 +1,4 @@
-class TestMyChart
+module MyChartTest::Output
 
   def test_define_output_file
     assert_includes @mc.output_files.flatten, @file
@@ -14,10 +14,6 @@ class TestMyChart
 
   def test_canvas
     assert_match %r{<html.*<canvas.*script>.*html>}m, @content
-  end
-
-  def test_canvas_size
-    assert_match %r{width='1280'.*height='720'}m, @content
   end
 
   def test_canvas_size

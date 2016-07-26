@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'charts/radar'
+require 'chart/my_chart_type'
 require 'mock_data'
 
 class TestRadar < MiniTest::Unit::TestCase
@@ -9,11 +9,8 @@ class TestRadar < MiniTest::Unit::TestCase
     assert_match /"type":"radar"."data":/, json
   end
 
-  def test_derive    
-    assert_includes Proto.derive, :radar
-  end
-
   def setup
-    @ch = Radar.new mock_data_xyz
+    MyChartType.load
+    @ch = MyChartType::Radar.new mock_data_xyz
   end
 end

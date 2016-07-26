@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'charts/line'
+require 'chart/my_chart_type'
 require 'mock_data'
 
 class TestLine < MiniTest::Unit::TestCase
@@ -9,11 +9,8 @@ class TestLine < MiniTest::Unit::TestCase
     assert_match /"type":"line"."data":/, json
   end
 
-  def test_derive    
-    assert_includes Proto.derive, :line
-  end
-
   def setup
-    @ch = Line.new mock_data_xyz
+    MyChartType.load
+    @ch = MyChartType::Line.new mock_data_xyz
   end
 end

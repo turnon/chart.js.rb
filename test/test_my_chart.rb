@@ -1,10 +1,15 @@
 require 'minitest/autorun'
 require 'my_chart'
 require 'file_op'
+require 'test_my_chart/integrate'
 
 class TestMyChart < MiniTest::Unit::TestCase
 
   include FileOp
+
+  MyChartTest.constants.each do |c|
+    include MyChartTest.const_get(c)
+  end
 
   def setup
 
