@@ -1,4 +1,5 @@
 require 'ostruct'
+require 'chart/my_chart_type'
 
 class ChartTask
 
@@ -9,7 +10,7 @@ class ChartTask
   end
 
   def build
-    Proto.concrete self
+    MyChartType.concrete self
   end
   
   def data
@@ -19,7 +20,11 @@ class ChartTask
   def id
     [type, data_task.id].join('_').to_sym
   end
-  
+
+  def type_class
+    type.capitalize
+  end
+
   def method_missing name, *args, &blk
     para.respond_to?(name) ? para.send(name) : nil    
   end
