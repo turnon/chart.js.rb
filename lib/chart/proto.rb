@@ -3,9 +3,23 @@ require 'json'
 require 'xyz'
 
 module MyChartType
-  module Proto
+  class Proto
 
     attr_reader :id
+
+    module ClassMethods
+
+      def no_z_axis
+        define_method :no_z_axis? do
+          true
+        end
+      end
+
+    end
+
+    def self.inherited concrete_type
+      concrete_type.extend ClassMethods
+    end
 
     def initialize constructor
       grouped_data = constructor.data

@@ -1,6 +1,4 @@
-require 'chart/proto'
-
-class MyChartType::Pie
+class Pie < MyChartType::Proto
 
   def concrete_type
     :pie
