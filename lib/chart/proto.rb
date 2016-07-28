@@ -7,7 +7,7 @@ module MyChartType
 
     attr_reader :id
 
-    module ClassMethods
+    class << self
 
       def no_z_axis
         define_method :no_z_axis? do
@@ -15,10 +15,6 @@ module MyChartType
         end
       end
 
-    end
-
-    def self.inherited concrete_type
-      concrete_type.extend ClassMethods
     end
 
     def initialize constructor
