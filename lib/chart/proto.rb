@@ -17,13 +17,13 @@ module MyChartType
 
     end
 
-    def initialize constructor
-      grouped_data = constructor.data
-      raise Exception, "#{type} has no z axis" if grouped_data.kind_of? XYZ and no_z_axis?
-      @id = constructor.id
+    def initialize grouped_data, opt={}
+      #grouped_data = constructor.data
+      #raise Exception, "#{type} has no z axis" if grouped_data.kind_of? XYZ and no_z_axis?
+      #@id = constructor.id
       @grouped_data = grouped_data
-      @width = constructor.w
-      @height = constructor.h
+      @width = opt[:w]
+      @height = opt[:h]
     end
 
     def labels

@@ -19,7 +19,7 @@ module MyChart
 
   class Chart
 
-    attr_reader :tasks, :charts, :chart_constructors
+    attr_reader :tasks, :_charts, :chart_constructors
 
     def initialize
       @tasks = Tasks.new
@@ -40,10 +40,18 @@ module MyChart
       result(name).value
     end
 
+    def grouped
+      @grouped ||= {}
+    end
+
+    def charts
+      @charts ||= {}
+    end
+
     private
 
     def generate_charts
-      @charts = chart_constructors.map do |constructor|
+      @_charts = chart_constructors.map do |constructor|
         constructor.build
       end
     end

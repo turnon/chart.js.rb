@@ -1,4 +1,5 @@
 require 'helper/string'
+require 'chart/proto'
 
 module MyChartType
 
@@ -6,39 +7,54 @@ module MyChartType
 
     include Enumerable
 
-    def load
-      load_proto
-      load_concrete_charts
-    end
+    #def load
+    #  load_proto
+    #  load_concrete_charts
+    #end
 
-    def concrete constructor
+    #def concrete constructor
+    #  begin
+    #    chart_class = const_get constructor.type_class
+    #  rescue NameError
+    #    raise Exception, "no such chart: #{constructor.type}" unless chart_class
+    #  end
+    #  chart_class.new constructor
+    #end
+
+    def concrete type
       begin
-        chart_class = const_get constructor.type_class
+        chart_class = detect{|klass| class_to_sym(klass) == type }
       rescue NameError
-        raise Exception, "no such chart: #{constructor.type}" unless chart_class
+        raise Exception, "no such chart: #{type}" unless chart_class
       end
-      chart_class.new constructor
     end
 
     def each &blk
-      load
+      #load
+      load_concrete_charts
       custom_charts.each &blk
     end
 
     def each_sym &blk
-      map{ |klass| basename(klass).anticapitalize.to_sym }.each &blk
+      map{ |klass| class_to_sym klass }.each &blk
     end
 
     private
+
+    def class_to_sym klass
+      basename(klass).anticapitalize.to_sym
+    end
 
     def basename klass
       klass.name.split(/::/)[-1]
     end
 
     def load_concrete_charts
+      return if @loaded
       definitions.each do |c|
         class_eval File.read(c)
       end
+      @loaded = true
     end
 
     def load_proto
