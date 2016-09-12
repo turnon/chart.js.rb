@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'my_chart'
 require 'file_op'
+require 'wrapped_num'
 require 'my_chart_test/integrate'
 
 class TestMyChart < MiniTest::Unit::TestCase
@@ -18,7 +19,9 @@ class TestMyChart < MiniTest::Unit::TestCase
     file3 = tmpfile_path 3
 
     @mc = MyChart.js do
-      material [1,2,3,4,5,6,7,8,9,10]
+      material do
+	(1..10).map{|n| WrappedNum.new n}
+      end
 
       select :even, from: :ge3 do |obj|
         obj.even?
@@ -43,7 +46,7 @@ class TestMyChart < MiniTest::Unit::TestCase
       end
 
       group by: :mod3 do |n|
-        n % 3
+        n.mod3
       end
 
       select :not_divisible_by_3, from: :GROUP_BY_mod3 do |mod3|
@@ -74,9 +77,7 @@ class TestMyChart < MiniTest::Unit::TestCase
     @content3 = read_f @file3
 
     @mc1 = MyChart.js do
-      material do
-        (1..10).to_a
-      end
+      material [1,2,3,4,5,6,7,8,9,10]
     end
 
   end

@@ -1,2 +1,5 @@
 *.gem
-**/*.swp
+*.swp
+lib/**/*.swp
+test/*.swp
+test/**/*.swp
