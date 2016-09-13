@@ -67,7 +67,7 @@ module MyChart
 end
 
 require 'dsl/material'
-require 'dsl/select'
+#require 'dsl/select'
 require 'dsl/group'
 require 'dsl/draw'
 require 'dsl/output'

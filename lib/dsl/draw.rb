@@ -55,6 +55,10 @@ module MyChart
 	@y = arg[1] if arg[1] and arg[1].kind_of? Symbol
       end
 
+      def from
+	opt[:from] if opt
+      end
+
       def xy_id
 	x.to_sym
       end

@@ -25,7 +25,7 @@ module MyChartTest::Draw
   def test_cache_tmp_grouped_date
     obj = @mc.grouped[:mod3].value[1][0]
     assert_equal 1, obj.mod3_exe
-    assert_equal 1, obj.x5_exe
+    assert_equal 2, obj.x5_exe
   end
 
   def test_custom_group_by_method_on_x

@@ -29,19 +29,21 @@ class TestMyChart < MiniTest::Unit::TestCase
 
       line :mod3, :x5
 
-      #select :even, from: :ge3 do |obj|
-      #  obj.even?
-      #end
+      select :ge3 do |obj|
+        obj >= 3
+      end
 
-      #select :ge3 do |obj|
-      #  obj >= 3
-      #end
+      select :even, from: :ge3 do |obj|
+        obj.even?
+      end
 
-      #select :x2, &:even?
+      select :x2, &:even?
 
       #group :even_FROM_ge3, by: :divisible_by_3 do |n|
       #  (n % 3 == 0) ? 'divisible_by_3' : 'not_divisible_by_3'
       #end
+
+      pie :x5, from: :ge3
 
       #group :ge3, by: :odd_or_even do |n|
       #  n.odd? ? 'odd' : 'even'

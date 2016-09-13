@@ -1,22 +1,23 @@
 module MyChartTest::Data
 
   def test_material
-    assert_equal [1,2,3,4,5,6,7,8,9,10], @mc.value(MyChart::ALL_DATA)
-    assert_equal [1,2,3,4,5,6,7,8,9,10], @mc1.value(MyChart::ALL_DATA)
+    exp_data = [1,2,3,4,5,6,7,8,9,10]
+    assert_equal exp_data, @mc.raw_data[MyChart::ALL_DATA]
+    assert_equal exp_data, @mc1.raw_data[MyChart::ALL_DATA]
   end
 
   def test_group_by_method
     assert @mc.group_by_methods[:odd_or_even]
   end
 
-  #def test_select_from_material
-  #  assert_equal [3,4,5,6,7,8,9,10], @mc.value(:ge3)
-  #  assert_equal [2,4,6,8,10], @mc.value(:x2)
-  #end
+  def test_select_from_material
+    assert_equal [3,4,5,6,7,8,9,10], @mc.raw_data[:ge3]
+    assert_equal [2,4,6,8,10], @mc.raw_data[:x2]
+  end
 
-  #def test_select_from_selected
-  #  assert_equal [4,6,8,10], @mc.value(:even_FROM_ge3)
-  #end
+  def test_select_from_selected
+    assert_equal [4,6,8,10], @mc.raw_data[:even__from__ge3]
+  end
 
   #def test_x_to_xy
   #  assert_equal ({'even' => [2,4,6,8,10], 'odd' => [1,3,5,7,9]}), @mc.value(:GROUP_BY_odd_or_even)
