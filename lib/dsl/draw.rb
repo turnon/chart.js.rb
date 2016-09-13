@@ -14,11 +14,20 @@ module MyChart
 
       define_method chart_cmd do |*arg|
 	chart_config = ChartCmdARGV.new *arg
-	grp = @__data__.group_by &chart_config.x
-	xy = XY.new grp
-        grouped[chart_config.data_id] = xy
-	klass = MyChartType.concrete chart_cmd
-	charts["#{chart_cmd}__#{chart_config.data_id}".to_sym] = klass.new xy
+	unless chart_config.y
+	  grp = @__data__.group_by &chart_config.x
+	  xy = XY.new grp
+          grouped[chart_config.data_id] = xy
+	  klass = MyChartType.concrete chart_cmd
+	  charts["#{chart_cmd}__#{chart_config.data_id}".to_sym] = klass.new xy
+	else
+	  grp = @__data__.group_by &chart_config.x
+	  xy = XY.new grp
+	  xyz = xy.group_by &chart_config.y
+          grouped[chart_config.data_id] = xyz
+	  klass = MyChartType.concrete chart_cmd
+	  charts["#{chart_cmd}__#{chart_config.data_id}".to_sym] = klass.new xyz
+	end
       end
     end
 

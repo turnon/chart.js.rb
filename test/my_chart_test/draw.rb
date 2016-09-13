@@ -16,4 +16,10 @@ module MyChartTest::Draw
     assert @mc.charts[:bar__mod3]
   end
 
+  def test_bar_x_y
+    exp_data = {1=>{true: [10], false: [1,4,7]}, 2=>{true: [5], false: [2,8]}, 0=>{false: [3,6,9]}}
+    assert_equal exp_data, @mc.grouped[:mod3__x5].value
+    assert @mc.charts[:bar__mod3__x5]
+  end
+
 end

@@ -25,6 +25,8 @@ class TestMyChart < MiniTest::Unit::TestCase
 
       bar :mod3
 
+      bar :mod3, :x5
+
       #select :even, from: :ge3 do |obj|
       #  obj.even?
       #end
