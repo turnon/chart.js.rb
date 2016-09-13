@@ -47,13 +47,13 @@ class TestMyChart < MiniTest::Unit::TestCase
       #  n.odd? ? 'odd' : 'even'
       #end
 
-      #group by: :odd_or_even do |n|
-      #  n.odd? ? 'odd' : 'even'
-      #end
+      group_by :odd_or_even do |n|
+        n.odd? ? 'odd' : 'even'
+      end
 
-      #group by: :mod3 do |n|
-      #  n.mod3
-      #end
+      bar :odd_or_even
+
+      bar :mod3, :odd_or_even
 
       #select :not_divisible_by_3, from: :GROUP_BY_mod3 do |mod3|
       #  not mod3.zero?

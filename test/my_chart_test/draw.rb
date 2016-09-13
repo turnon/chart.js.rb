@@ -28,4 +28,14 @@ module MyChartTest::Draw
     assert_equal 1, obj.x5_exe
   end
 
+  def test_custom_group_by_method_on_x
+    exp_data = {'odd' => [1,3,5,7,9], 'even' => [2,4,6,8,10]}
+    assert_equal exp_data, @mc.grouped[:odd_or_even].value
+  end
+
+  def test_custom_group_by_method_on_y
+    exp_data = {1=>{'odd' => [1,7], 'even' => [4,10]}, 2=>{'odd' => [5], 'even' => [2,8]}, 0=>{'odd' => [3,9], 'even' => [6]}}
+    assert_equal exp_data, @mc.grouped[:mod3__odd_or_even].value
+  end
+
 end

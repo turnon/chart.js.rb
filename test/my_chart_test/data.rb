@@ -5,6 +5,10 @@ module MyChartTest::Data
     assert_equal [1,2,3,4,5,6,7,8,9,10], @mc1.value(MyChart::ALL_DATA)
   end
 
+  def test_group_by_method
+    assert @mc.group_by_methods[:odd_or_even]
+  end
+
   #def test_select_from_material
   #  assert_equal [3,4,5,6,7,8,9,10], @mc.value(:ge3)
   #  assert_equal [2,4,6,8,10], @mc.value(:x2)

@@ -30,12 +30,18 @@ module MyChart
     def grouped chart_config = nil
       @grouped ||= {}
       return @grouped unless chart_config
-      xy = (@grouped[chart_config.xy_id] ||= XY.new(@__data__.group_by &chart_config.x))
+      grp_m = check_overwrite_group_method chart_config.x
+      xy = (@grouped[chart_config.xy_id] ||= XY.new(@__data__.group_by &grp_m))
       unless chart_config.y
         xy
       else
-        @grouped[chart_config.xyz_id] ||= xy.group_by(&chart_config.y)
+        grp_m = check_overwrite_group_method chart_config.y
+        @grouped[chart_config.xyz_id] ||= xy.group_by(&grp_m)
       end
+    end
+
+    def check_overwrite_group_method method_id
+      group_by_methods[method_id] || method_id
     end
 
     class ChartCmdARGV
