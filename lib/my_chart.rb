@@ -40,14 +40,6 @@ module MyChart
       result(name).value
     end
 
-    def grouped
-      @grouped ||= {}
-    end
-
-    def charts
-      @charts ||= {}
-    end
-
     private
 
     def generate_charts

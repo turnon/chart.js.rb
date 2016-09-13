@@ -14,20 +14,27 @@ module MyChart
 
       define_method chart_cmd do |*arg|
 	chart_config = ChartCmdARGV.new *arg
-	unless chart_config.y
-	  grp = @__data__.group_by &chart_config.x
-	  xy = XY.new grp
-          grouped[chart_config.data_id] = xy
-	  klass = MyChartType.concrete chart_cmd
-	  charts["#{chart_cmd}__#{chart_config.data_id}".to_sym] = klass.new xy
-	else
-	  grp = @__data__.group_by &chart_config.x
-	  xy = XY.new grp
-	  xyz = xy.group_by &chart_config.y
-          grouped[chart_config.data_id] = xyz
-	  klass = MyChartType.concrete chart_cmd
-	  charts["#{chart_cmd}__#{chart_config.data_id}".to_sym] = klass.new xyz
-	end
+
+	chart_id = "#{chart_cmd}__#{chart_config.data_id}".to_sym
+	klass = MyChartType.concrete chart_cmd
+	grp_data = grouped chart_config
+
+	charts[chart_id] = klass.new grp_data
+      end
+    end
+
+    def charts
+      @charts ||= {}
+    end
+
+    def grouped chart_config = nil
+      @grouped ||= {}
+      return @grouped unless chart_config
+      xy = (@grouped[chart_config.xy_id] ||= XY.new(@__data__.group_by &chart_config.x))
+      unless chart_config.y
+        xy
+      else
+        @grouped[chart_config.xyz_id] ||= xy.group_by(&chart_config.y)
       end
     end
 
@@ -42,8 +49,16 @@ module MyChart
 	@y = arg[1] if arg[1] and arg[1].kind_of? Symbol
       end
 
+      def xy_id
+	x.to_sym
+      end
+
+      def xyz_id
+	"#{x}__#{y}".to_sym
+      end
+
       def data_id
-	(y ? "#{x}__#{y}" : "#{x}").to_sym
+	y ? xyz_id : xy_id
       end
     end
 
