@@ -1,6 +1,5 @@
 require 'chart/my_chart_type'
 require 'chart_task'
-require 'xy'
 
 module MyChart
   class Chart
@@ -29,15 +28,16 @@ module MyChart
 
     def grouped chart_config = nil
       @grouped ||= {}
+
       return @grouped unless chart_config
+
+      x = get_x chart_config.from
       grp_m = check_overwrite_group_method chart_config.x
-      xy = (@grouped[chart_config.xy_id] ||= XY.new(@__data__.group_by &grp_m))
-      unless chart_config.y
-        xy
-      else
-        grp_m = check_overwrite_group_method chart_config.y
-        @grouped[chart_config.xyz_id] ||= xy.group_by(&grp_m)
-      end
+      xy = (@grouped[chart_config.xy_id] ||= (x.group_by &grp_m))
+      return xy unless chart_config.y
+
+      grp_m = check_overwrite_group_method chart_config.y
+      @grouped[chart_config.xyz_id] ||= xy.group_by(&grp_m)
     end
 
     def check_overwrite_group_method method_id
@@ -60,11 +60,11 @@ module MyChart
       end
 
       def xy_id
-	x.to_sym
+	(from ? "#{x}__from__#{from}" : x).to_sym
       end
 
       def xyz_id
-	"#{x}__#{y}".to_sym
+	(from ? "#{x}__#{y}__from__#{from}" : "#{x}__#{y}").to_sym
       end
 
       def data_id

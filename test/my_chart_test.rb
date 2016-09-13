@@ -45,6 +45,8 @@ class TestMyChart < MiniTest::Unit::TestCase
 
       pie :x5, from: :ge3
 
+      line :x5, :mod3, from: :ge3
+
       #group :ge3, by: :odd_or_even do |n|
       #  n.odd? ? 'odd' : 'even'
       #end

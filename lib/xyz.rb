@@ -21,6 +21,11 @@ class XYZ
     end
   end
 
+  def == obj
+    return false unless obj.kind_of? XYZ
+    value == obj.value
+  end
+
   private
 
   def keys_in_sub_hash hash_2d
