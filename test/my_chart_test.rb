@@ -23,41 +23,27 @@ class TestMyChart < MiniTest::Unit::TestCase
 	(1..10).map{|n| WrappedNum.new n}
       end
 
-      bar :mod3
-
-      bar :mod3, :x5
-
-      line :mod3, :x5
-
-      select :ge3 do |obj|
-        obj >= 3
-      end
-
-      select :even, from: :ge3 do |obj|
-        obj.even?
-      end
-
+      select :ge3, &-> n {n >= 3}
+      select :even, from: :ge3, &-> n {n.even?}
       select :x2, &:even?
+
+      group_by :odd_or_even, &-> n {n.odd? ? 'odd' : 'even'}
+
+      bar  :mod3
+      bar  :mod3, :x5
+      line :mod3, :x5
+      pie  :x5, from: :ge3
+      line :x5, :mod3, from: :ge3
+      bar  :odd_or_even
+      bar  :mod3, :odd_or_even
 
       #group :even_FROM_ge3, by: :divisible_by_3 do |n|
       #  (n % 3 == 0) ? 'divisible_by_3' : 'not_divisible_by_3'
       #end
 
-      pie :x5, from: :ge3
-
-      line :x5, :mod3, from: :ge3
-
       #group :ge3, by: :odd_or_even do |n|
       #  n.odd? ? 'odd' : 'even'
       #end
-
-      group_by :odd_or_even do |n|
-        n.odd? ? 'odd' : 'even'
-      end
-
-      bar :odd_or_even
-
-      bar :mod3, :odd_or_even
 
       #select :not_divisible_by_3, from: :GROUP_BY_mod3 do |mod3|
       #  not mod3.zero?
