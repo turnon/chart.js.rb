@@ -10,7 +10,7 @@ class TestLine < MiniTest::Unit::TestCase
   end
 
   def setup
-    MyChartType.load
-    @ch = MyChartType::Line.new mock_data_xyz
+    MyChartType.load_concrete_charts
+    @ch = MyChartType::Line.new mock_xyz
   end
 end

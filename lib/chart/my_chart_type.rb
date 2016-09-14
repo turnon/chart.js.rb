@@ -22,11 +22,9 @@ module MyChartType
     #end
 
     def concrete type
-      begin
-        chart_class = detect{|klass| class_to_sym(klass) == type }
-      rescue NameError
-        raise Exception, "no such chart: #{type}" unless chart_class
-      end
+      chart_class = detect{|klass| class_to_sym(klass) == type }
+      raise Exception, "no such chart: #{type}" unless chart_class
+      chart_class
     end
 
     def each &blk
@@ -39,16 +37,6 @@ module MyChartType
       map{ |klass| class_to_sym klass }.each &blk
     end
 
-    private
-
-    def class_to_sym klass
-      basename(klass).anticapitalize.to_sym
-    end
-
-    def basename klass
-      klass.name.split(/::/)[-1]
-    end
-
     def load_concrete_charts
       return if @loaded
       definitions.each do |c|
@@ -57,8 +45,14 @@ module MyChartType
       @loaded = true
     end
 
-    def load_proto
-      require 'chart/proto'
+    private
+
+    def class_to_sym klass
+      basename(klass).anticapitalize.to_sym
+    end
+
+    def basename klass
+      klass.name.split(/::/)[-1]
     end
 
     def definitions

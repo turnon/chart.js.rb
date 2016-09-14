@@ -24,7 +24,7 @@ class TestProto < MiniTest::Unit::TestCase
   end
 
   def setup
-    @proto = Test.new mock_data_xyz
+    @proto = Test.new mock_xyz
   end
 
   class Test < MyChartType::Proto
