@@ -18,7 +18,6 @@ module MyChartType
     end
 
     def initialize grouped_data, opt={}
-      #grouped_data = constructor.data
       raise Exception, "#{type} has no z axis" if grouped_data.kind_of? XYZ and no_z_axis?
       @id = opt[:id]
       @grouped_data = grouped_data

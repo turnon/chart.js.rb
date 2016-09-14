@@ -14,11 +14,7 @@ class TestSpecifiedTemplate < MiniTest::Unit::TestCase
     @mc = MyChart.js do
       material [1,2,3,4,5,6,7,8,9,10]
 
-      bar :even?, w: 1280, h: 720 do
-        group by: :mod3 do |n|
-          n % 3
-        end
-      end
+      bar :even?, w: 1280, h: 720
 
       output file, tmpl: template
 

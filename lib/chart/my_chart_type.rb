@@ -7,20 +7,6 @@ module MyChartType
 
     include Enumerable
 
-    #def load
-    #  load_proto
-    #  load_concrete_charts
-    #end
-
-    #def concrete constructor
-    #  begin
-    #    chart_class = const_get constructor.type_class
-    #  rescue NameError
-    #    raise Exception, "no such chart: #{constructor.type}" unless chart_class
-    #  end
-    #  chart_class.new constructor
-    #end
-
     def concrete type
       chart_class = detect{|klass| class_to_sym(klass) == type }
       raise Exception, "no such chart: #{type}" unless chart_class
@@ -28,7 +14,6 @@ module MyChartType
     end
 
     def each &blk
-      #load
       load_concrete_charts
       custom_charts.each &blk
     end

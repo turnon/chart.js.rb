@@ -26,8 +26,7 @@ class XY
   end
 
   def == obj
-    return false unless obj.kind_of? XY
-    value == obj.value
+    obj.kind_of? XY and value == obj.value
   end
 
 end
