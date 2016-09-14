@@ -1,4 +1,3 @@
-require 'tasks'
 require 'erb'
 
 module MyChart
@@ -14,37 +13,23 @@ module MyChart
 
   end
 
-  ALL_DATA = Tasks::ROOT
+  ALL_DATA = :__all_data__
   DEFAULT_TMPL = File.join File.dirname(__FILE__), 'tmpl.htm'
 
   class Chart
 
-    attr_reader :tasks, :charts, :chart_constructors
-
-    def initialize
-      @tasks = Tasks.new
-      @chart_constructors = []
-    end
+    attr_reader :chart_tags
 
     def generate
-      tasks.exe
       generate_charts
       generate_files
-    end
-
-    def result name
-      tasks[name.to_sym].result
-    end
-
-    def value name
-      result(name).value
     end
 
     private
 
     def generate_charts
-      @charts = chart_constructors.map do |constructor|
-        constructor.build
+      @chart_tags = charts.map do |id, chart|
+        chart
       end
     end
 
@@ -67,7 +52,6 @@ module MyChart
 end
 
 require 'dsl/material'
-require 'dsl/select'
 require 'dsl/group'
 require 'dsl/draw'
 require 'dsl/output'

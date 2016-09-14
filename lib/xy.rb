@@ -25,4 +25,8 @@ class XY
     [{label: 'xy', data: value.values.map{|objs| objs.count}}]
   end
 
+  def == obj
+    obj.kind_of? XY and value == obj.value
+  end
+
 end

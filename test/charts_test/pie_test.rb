@@ -10,7 +10,7 @@ class TestPie < MiniTest::Unit::TestCase
   end
 
   def setup
-    MyChartType.load
-    @ch = MyChartType::Pie.new mock_data_xy
+    MyChartType.load_concrete_charts
+    @ch = MyChartType::Pie.new mock_xy
   end
 end

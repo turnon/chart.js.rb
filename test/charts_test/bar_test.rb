@@ -10,7 +10,7 @@ class TestBar < MiniTest::Unit::TestCase
   end
 
   def setup
-    MyChartType.load
-    @bar = MyChartType::Bar.new mock_data_xy
+    MyChartType.load_concrete_charts
+    @bar = MyChartType::Bar.new mock_xy
   end
 end

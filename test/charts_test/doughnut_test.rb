@@ -10,7 +10,7 @@ class TestDoughnut < MiniTest::Unit::TestCase
   end
 
   def setup
-    MyChartType.load
-    @ch = MyChartType::Doughnut.new mock_data_xy
+    MyChartType.load_concrete_charts
+    @ch = MyChartType::Doughnut.new mock_xy
   end
 end

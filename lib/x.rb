@@ -17,4 +17,8 @@ class X
     @objs
   end
 
+  def == obj
+    obj.kind_of? X and value == obj.value
+  end
+
 end
