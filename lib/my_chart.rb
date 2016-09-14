@@ -19,7 +19,7 @@ module MyChart
 
   class Chart
 
-    attr_reader :tasks, :_charts, :chart_constructors
+    attr_reader :tasks, :chart_tags, :chart_constructors
 
     def initialize
       @tasks = Tasks.new
@@ -27,24 +27,24 @@ module MyChart
     end
 
     def generate
-      tasks.exe
+      #tasks.exe
       generate_charts
       generate_files
     end
 
-    def result name
-      tasks[name.to_sym].result
-    end
+    #def result name
+    #  tasks[name.to_sym].result
+    #end
 
-    def value name
-      result(name).value
-    end
+    #def value name
+    #  result(name).value
+    #end
 
     private
 
     def generate_charts
-      @_charts = chart_constructors.map do |constructor|
-        constructor.build
+      @chart_tags = charts.map do |id, chart|
+        chart
       end
     end
 

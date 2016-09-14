@@ -18,7 +18,7 @@ module MyChart
 	klass = MyChartType.concrete chart_cmd
 	grp_data = grouped chart_config
 
-	charts[chart_id] = klass.new grp_data
+	charts[chart_id] = klass.new grp_data, id: chart_id, w: chart_config.w, h: chart_config.h
       end
     end
 
@@ -50,13 +50,21 @@ module MyChart
 
       def initialize *arg
 	return if arg.empty?
-        @opt = arg[-1] if arg[-1].kind_of? Hash
+        @opt = (arg[-1].kind_of? Hash) ? arg[-1] : {}
 	@x = arg[0] if arg[0].kind_of? Symbol
 	@y = arg[1] if arg[1] and arg[1].kind_of? Symbol
       end
 
+      def w
+	opt[:w]
+      end
+
+      def h
+	opt[:h]
+      end
+
       def from
-	opt[:from] if opt
+	opt[:from]
       end
 
       def xy_id

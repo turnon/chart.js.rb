@@ -16,14 +16,13 @@ class XYZ
     labels_in_datasets.map do |lb|
       {
         label: lb,
-        data: value.map{ |k, sub_hash| sub_hash[lb].count}
+        data: value.map{ |k, sub_hash| sub_hash[lb] ? sub_hash[lb].count : 0}
       }
     end
   end
 
   def == obj
-    return false unless obj.kind_of? XYZ
-    value == obj.value
+    obj.kind_of? XYZ and value == obj.value
   end
 
   private

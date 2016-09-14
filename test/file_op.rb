@@ -14,7 +14,7 @@ module FileOp
 
   def del_f *files
     files.each do |f|
-      File.delete f if File.exist? f
+      File.delete f if not f.nil? and File.exist? f
     end
   end
 end

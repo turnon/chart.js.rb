@@ -14,9 +14,9 @@ class TestMyChart < MiniTest::Unit::TestCase
 
   def setup
 
-    #file = tmpfile_path
-    #file2 = tmpfile_path 2
-    #file3 = tmpfile_path 3
+    file = tmpfile_path
+    file2 = tmpfile_path 2
+    file3 = tmpfile_path 3
 
     @mc = MyChart.js do
       material do
@@ -35,7 +35,7 @@ class TestMyChart < MiniTest::Unit::TestCase
       pie  :x5, from: :ge3
       line :x5, :mod3, from: :ge3
       bar  :odd_or_even
-      bar  :mod3, :odd_or_even
+      bar  :mod3, :odd_or_even, w: 1280, h: 720
 
       #group :even_FROM_ge3, by: :divisible_by_3 do |n|
       #  (n % 3 == 0) ? 'divisible_by_3' : 'not_divisible_by_3'
@@ -59,18 +59,18 @@ class TestMyChart < MiniTest::Unit::TestCase
       #  end
       #end
 
-      #output file
-      #output file2, file3
+      output file
+      output file2, file3
 
     end
 
-    #@file = file
-    #@file2 = file2
-    #@file3 = file3
+    @file = file
+    @file2 = file2
+    @file3 = file3
 
-    #@content = read_f @file
-    #@content2 = read_f @file2
-    #@content3 = read_f @file3
+    @content = read_f @file
+    @content2 = read_f @file2
+    @content3 = read_f @file3
 
     @mc1 = MyChart.js do
       material [1,2,3,4,5,6,7,8,9,10]
@@ -78,7 +78,7 @@ class TestMyChart < MiniTest::Unit::TestCase
 
   end
 
-  #def teardown
-  #  del_f @file, @file2, @file3
-  #end
+  def teardown
+    del_f @file, @file2, @file3
+  end
 end
