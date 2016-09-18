@@ -38,4 +38,9 @@ class XY
     XY.new new_hash
   end
 
+  def sort by
+    new_hash = Hash[value.sort_by{|k, objs| :key === by ? k : objs.size}]
+    XY.new new_hash
+  end
+
 end
