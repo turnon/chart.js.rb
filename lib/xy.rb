@@ -29,4 +29,13 @@ class XY
     obj.kind_of? XY and value == obj.value
   end
 
+  def complete_keys range=nil
+    return self unless range
+    new_hash = value.dup
+    range.each do |key|
+      new_hash[key] = [] unless new_hash[key]
+    end
+    XY.new new_hash
+  end
+
 end

@@ -36,6 +36,7 @@ class TestMyChart < MiniTest::Unit::TestCase
       line :x5, :mod3, from: :ge3
       bar  :odd_or_even
       bar  :mod3, :odd_or_even, w: 1280, h: 720
+      bar  :mod3, keys: [0,1,2,3]
 
       output file
       output file2, file3
