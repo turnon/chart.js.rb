@@ -20,18 +20,19 @@ module MyChart
       @charts ||= {}
     end
 
-    def grouped chart_config = nil
+    def grouped cfg = nil
       @grouped ||= {}
 
-      return @grouped unless chart_config
+      return @grouped unless cfg
 
-      x = get_x chart_config.from
-      grp_m = check_overwrite_group_method chart_config.x
-      xy = (@grouped[chart_config.xy_id] ||= (x.group_by &grp_m))
-      return xy unless chart_config.y
+      x = get_x cfg.from
+      grp_m = check_overwrite_group_method cfg.x
+      xy = (@grouped[[cfg.x, cfg.from]] ||= (x.group_by &grp_m))
+      xy = (@grouped[[cfg.x, cfg.keys, cfg.from]] ||= (xy.complete_keys cfg.keys)) if cfg.keys
+      return xy unless cfg.y
 
-      grp_m = check_overwrite_group_method chart_config.y
-      @grouped[chart_config.xyz_id] ||= xy.group_by(&grp_m)
+      grp_m = check_overwrite_group_method cfg.y
+      @grouped[[cfg.x, cfg.y, cfg.keys, cfg.from]] ||= xy.group_by(&grp_m)
     end
 
     def check_overwrite_group_method method_id
@@ -61,16 +62,16 @@ module MyChart
 	opt[:from]
       end
 
-      def xy_id
-	(from ? "#{x}__from__#{from}" : x).to_sym
-      end
-
-      def xyz_id
-	(from ? "#{x}__#{y}__from__#{from}" : "#{x}__#{y}").to_sym
+      def keys
+	opt[:keys]
       end
 
       def data_id
-	y ? xyz_id : xy_id
+	[x,
+         y ? y : "no_y",
+	 keys ? "keys_#{keys.hash}" : "no_keys",
+	 from ? "from_#{from}" : "from_all"
+	].join '__'
       end
     end
 
