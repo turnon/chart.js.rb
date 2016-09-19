@@ -38,8 +38,18 @@ class XY
     XY.new new_hash
   end
 
-  def sort by
-    new_hash = Hash[value.sort_by{|k, objs| :key === by ? k : objs.size}]
+  def sort order
+    compare = if :key === order.asc
+                -> a, b { a[0] <=> b[0] }
+	      elsif :key === order.desc
+                -> a, b { b[0] <=> a[0] }
+	      elsif :count === order.asc
+		-> a, b { a[1].size <=> b[1].size }
+	      else
+		-> a, b { b[1].size <=> a[1].size }
+	      end
+    sorted = value.to_a.sort &compare
+    new_hash = Hash[sorted]
     XY.new new_hash
   end
 

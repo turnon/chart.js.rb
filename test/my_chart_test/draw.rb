@@ -3,7 +3,7 @@ module MyChartTest::Draw
   def test_bar_x
     exp_data = make_xy 1=>[1, 4, 7, 10], 2=>[2, 5, 8], 0=>[3, 6, 9]
     assert_equal exp_data, @mc.grouped[[:mod3, nil]]
-    assert @mc.charts[:bar__mod3__no_y__no_keys__from_all__order_by_key]
+    assert @mc.charts[:bar__mod3__no_y__no_keys__from_all__asc_by_key]
   end
 
   def test_bar_x_y
@@ -40,8 +40,6 @@ module MyChartTest::Draw
 
   def test_bar_x_keys
     exp_data = make_xy 1=>[1, 4, 7, 10], 2=>[2, 5, 8], 0=>[3, 6, 9], 3=>[]
-    require 'pp'
-    pp @mc.grouped
     assert_equal exp_data, @mc.grouped[[:mod3, [0,1,2,3], nil]]
   end
 

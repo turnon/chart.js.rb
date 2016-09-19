@@ -29,7 +29,7 @@ class TestMyChart < MiniTest::Unit::TestCase
 
       group_by :odd_or_even, &-> n {n.odd? ? 'odd' : 'even'}
 
-      bar  :mod3, sort: :key
+      bar  :mod3, asc: :key
       bar  :mod3, :x5
       line :mod3, :x5
       pie  :x5, from: :ge3
