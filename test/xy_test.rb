@@ -24,14 +24,62 @@ class TestXY < MiniTest::Unit::TestCase
   end
 
   def test_labels
-    assert_equal [0,1,2], @xy.labels
+    assert_equal [0,1,2], @xy.labels.sort
   end
 
   def test_datasets
     assert_equal [{:label=>"xy", :data=>[6, 7, 7]}], @xy.datasets
   end
 
+  def test_sort
+    xy = @xy.sort mock_asc_key
+    assert_equal [0,1,2], xy.labels
+
+    xy = @xy.sort mock_desc_key
+    assert_equal [2,1,0], xy.labels
+
+    xy = @xy.sort mock_asc_count
+    assert_equal [0,2,1], xy.labels
+
+    xy = @xy.sort mock_desc_count
+    assert_equal [2,1,0], xy.labels
+  end
+
   def setup
-    @xy = XY.new({0 => [3,6,9,12,15,18], 1 => [1,4,7,10,13,16,19], 2 => [2,5,8,11,14,17,20]})
+    @xy = XY.new({0 => [3,6,9,12,15,18], 2 => [2,5,8,11,14,17,20], 1 => [1,4,7,10,13,16,19]})
+  end
+
+  def mock_order_by &block
+    m = MiniTest::Mock.new
+    4.times{yield m}
+    m
+  end
+
+  def mock_asc_key
+    mock_order_by do |m|
+      m.expect :asc, :key
+      m.expect :desc, nil
+    end
+  end
+
+  def mock_desc_key
+    mock_order_by do |m|
+      m.expect :asc, nil
+      m.expect :desc, :key
+    end
+  end
+
+  def mock_asc_count
+    mock_order_by do |m|
+      m.expect :asc, :count
+      m.expect :desc, nil
+    end
+  end
+
+  def mock_desc_count
+    mock_order_by do |m|
+      m.expect :asc, nil
+      m.expect :desc, :count
+    end
   end
 end

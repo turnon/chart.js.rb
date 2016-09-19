@@ -29,7 +29,7 @@ module MyChart
       grp_m = check_overwrite_group_method cfg.x
       xy = (@grouped[[cfg.x, cfg.from]] ||= (x.group_by &grp_m))
       xy = (@grouped[[cfg.x, cfg.keys, cfg.from]] ||= (xy.complete_keys cfg.keys)) if cfg.keys
-      xy = xy.sort(cfg.sort) if cfg.sort
+      xy = xy.sort(cfg) if cfg.asc or cfg.desc
       return xy unless cfg.y
 
       grp_m = check_overwrite_group_method cfg.y
@@ -52,8 +52,13 @@ module MyChart
       end
 
       def method_missing name, *arg
-	return opt[name] if [:w, :h, :from, :keys, :sort].include? name
+	return opt[name] if [:w, :h, :from, :keys, :asc, :desc].include? name
 	super
+      end
+
+      def sort
+	order = (asc and :asc) or (desc and :desc)
+	[order, 'by', (asc or desc)].join('_') if order
       end
 
       def data_id
@@ -61,7 +66,7 @@ module MyChart
          y ? y : "no_y",
 	 keys ? "keys_#{keys.hash}" : "no_keys",
 	 from ? "from_#{from}" : "from_all",
-	 sort ? "order_by_#{sort}" : nil
+	 sort
 	].compact.join '__'
       end
     end
