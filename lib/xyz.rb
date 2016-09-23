@@ -30,7 +30,7 @@ class XYZ
   def keys_in_sub_hash hash_2d
     hash_2d.values.reduce([]) do |labels, hash|
       labels + hash.keys
-    end.uniq
+    end.uniq.sort
   end
 
 end
