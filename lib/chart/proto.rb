@@ -15,6 +15,12 @@ module MyChartType
         end
       end
 
+      def same_color_on_x
+	define_method :styled_datasets do
+          diff_color_on_z
+	end
+      end
+
     end
 
     def initialize grouped_data, opt={}
