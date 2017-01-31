@@ -1,4 +1,4 @@
-require 'helper/string'
+require 'my_chart/helper/string'
 require 'chart/proto'
 
 module MyChartType
