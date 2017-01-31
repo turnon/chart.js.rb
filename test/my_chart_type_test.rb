@@ -5,7 +5,7 @@ class TestMyChartType < MiniTest::Unit::TestCase
 
   def test_find_definitions
     dfs = MyChart::Type.send(:definitions)
-    act_files = Dir[File.expand_path('../../lib/charts/*', __FILE__)]
+    act_files = Dir[File.expand_path('../../lib/my_chart/charts/*', __FILE__)]
     assert_equal Set.new(dfs), Set.new(act_files)
   end
 

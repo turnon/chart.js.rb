@@ -41,7 +41,7 @@ module MyChart::Type
     end
 
     def definitions
-      path = File.expand_path("../../charts/*", __FILE__)
+      path = File.expand_path("../charts/*", __FILE__)
       Dir[path]
     end
 
