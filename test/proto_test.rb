@@ -1,10 +1,10 @@
 require 'minitest/autorun'
-require 'chart/proto'
+require 'my_chart/proto'
 require 'mock_data'
 
 class TestProto < MiniTest::Unit::TestCase
 
-  def test_tojs    
+  def test_tojs
     json = @proto.json
 
     assert_kind_of String, json
@@ -27,6 +27,6 @@ class TestProto < MiniTest::Unit::TestCase
     @proto = Test.new mock_xyz
   end
 
-  class Test < MyChartType::Proto
+  class Test < MyChart::Proto
   end
 end

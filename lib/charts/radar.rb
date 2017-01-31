@@ -1,4 +1,4 @@
-class Radar < MyChartType::Proto
+class Radar < MyChart::Proto
 
   def concrete_type
     :radar

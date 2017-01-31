@@ -1,16 +1,16 @@
-require 'chart/my_chart_type'
+require 'my_chart/type'
 
 module MyChart
   module Dsl
     module Draw
 
-      MyChartType.each_sym do |chart_cmd|
+      MyChart::Type.each_sym do |chart_cmd|
 
         define_method chart_cmd do |*arg|
   	chart_config = ChartCmdARGV.new *arg
 
   	chart_id = "#{chart_cmd}__#{chart_config.data_id}".to_sym
-  	klass = MyChartType.concrete chart_cmd
+  	klass = MyChart::Type.concrete chart_cmd
   	grp_data = grouped chart_config
 
   	charts[chart_id] = klass.new grp_data, id: chart_id, w: chart_config.w, h: chart_config.h

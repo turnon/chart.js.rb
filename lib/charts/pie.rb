@@ -1,4 +1,4 @@
-class Pie < MyChartType::Proto
+class Pie < MyChart::Proto
 
   def concrete_type
     :pie

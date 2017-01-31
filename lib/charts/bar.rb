@@ -1,4 +1,4 @@
-class Bar < MyChartType::Proto
+class Bar < MyChart::Proto
 
   def concrete_type
     :bar

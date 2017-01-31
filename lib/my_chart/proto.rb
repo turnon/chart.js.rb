@@ -2,7 +2,7 @@ require 'chart/rainbow'
 require 'json'
 require 'my_chart/xyz'
 
-module MyChartType
+module MyChart
   class Proto
 
     attr_reader :id

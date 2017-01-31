@@ -1,4 +1,4 @@
-class PlainBar < MyChartType::Proto
+class PlainBar < MyChart::Proto
 
   same_color_on_x
 
