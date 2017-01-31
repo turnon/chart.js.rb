@@ -1,4 +1,4 @@
-require 'x'
+require 'my_chart/x'
 
 module MyChart
   class Chart
@@ -9,7 +9,7 @@ module MyChart
       #  X.new(objs)
       #end
       @__data__ = (dat ? dat : blk.call)
-      raw_data[ALL_DATA] = X.new @__data__
+      raw_data[ALL_DATA] = MyChart::X.new @__data__
     end
 
     def select name, opt={}, &blk

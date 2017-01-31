@@ -37,6 +37,6 @@ module MyChartTest::Data
   private
 
   def make_x objs
-    X.new objs
+    MyChart::X.new objs
   end
 end

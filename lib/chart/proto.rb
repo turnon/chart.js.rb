@@ -1,6 +1,6 @@
 require 'chart/rainbow'
 require 'json'
-require 'xyz'
+require 'my_chart/xyz'
 
 module MyChartType
   class Proto
@@ -24,7 +24,7 @@ module MyChartType
     end
 
     def initialize grouped_data, opt={}
-      raise Exception, "#{type} has no z axis" if grouped_data.kind_of? XYZ and no_z_axis?
+      raise Exception, "#{type} has no z axis" if grouped_data.kind_of? MyChart::XYZ and no_z_axis?
       @id = opt[:id]
       @grouped_data = grouped_data
       @width = opt[:w]

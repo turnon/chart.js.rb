@@ -46,10 +46,10 @@ module MyChartTest::Draw
   private
 
   def make_xy *arg
-    XY.new *arg
+    MyChart::XY.new *arg
   end
 
   def make_xyz *arg
-    XYZ.new *arg
+    MyChart::XYZ.new *arg
   end
 end
