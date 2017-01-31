@@ -1,4 +1,4 @@
-require 'chart/rainbow'
+require 'my_chart/rainbow'
 require 'json'
 require 'my_chart/xyz'
 
