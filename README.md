@@ -29,37 +29,24 @@ MyChart.js do
     # load mail objects here
   end
 
-  line w: 1280, h: 500 do
-    group :GROUP_BY_day, by: :fail_or_not do |m|
-      m.fail? ? 'FAIL' : 'SUCC'
-    end
-  end
-
-  bar w: 1280, h: 500  do
-    group by: :day do |m|
-      m.day
-    end
-  end
-
-  bar w: 1280, h: 500  do
-    group :fail, by: :day do |m|
-      m.day
-    end
-  end
-
   select :fail do |m|
     m.fail?
   end
 
-  output './mail_statistic.htm'
+  line :day, :fail?, w: 1280, h: 500, asc: :key
 
+  bar :day, w: 1280, h: 500
+
+  bar :day, w: 1280, h: 500, from: :fail
+
+  output './mail_statistic.htm'
 end
 ```
 
 execute the script:
 
 ```sh
-    $ mychartjs mail_st.rb
+    $ mychart.js mail_st.rb
 ```
 
 ## Supported charts
@@ -90,27 +77,3 @@ class Bar < MyChartType::Proto
 end
 ```
 
-## todo
-
-simplify it like this:
-
-```ruby
-MyChart.js do
-
-  material do
-    # load mail objects here
-  end
-
-  select :fail do |m|
-    m.fail?
-  end
-
-  line :day, :fail?, w: 1280, h: 500
-
-  bar :day, w: 1280, h: 500
-
-  bar :day, w: 1280, h: 500, from: :fail
-
-  output './mail_statistic.htm'
-end
-```
