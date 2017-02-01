@@ -54,5 +54,12 @@ module MyChart
       XY.new new_hash
     end
 
+    def limit config
+      limit_method, num = config.first ? [:first, config.first] : [:last, config.last]
+      limited = value.to_a.send limit_method, num
+      new_hash = Hash[limited]
+      XY.new new_hash
+    end
+
   end
 end

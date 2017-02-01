@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'my_chart'
 
-class Testnew_cmdARGV < MiniTest::Unit::TestCase
+class TestChartCmdARGV < MiniTest::Unit::TestCase
 
   EMPTY_HASH = {}
 
@@ -31,6 +31,12 @@ class Testnew_cmdARGV < MiniTest::Unit::TestCase
     assert_equal({w: 640, h: 480}, argv.opt)
     assert_equal nil, argv.x
     assert_equal nil, argv.y
+  end
+
+  def test_limit
+    argv = new_cmd first: 10
+    assert_equal 10, argv.first
+    assert_equal nil, argv.last
   end
 
   private
