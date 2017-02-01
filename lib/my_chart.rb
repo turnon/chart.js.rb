@@ -9,10 +9,10 @@ module MyChart
   class << self
 
     def js &blk
-      @chart = Chart.new
-      @chart.instance_exec &blk
-      @chart.generate
-      @chart
+      chart = Chart.new
+      chart.instance_exec &blk
+      chart.generate
+      chart
     end
 
   end
@@ -32,6 +32,10 @@ module MyChart
     def generate
       generate_charts
       generate_files
+    end
+
+    def plain_tags
+      chart_tags.map &:default_html
     end
 
     private
