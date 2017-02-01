@@ -89,7 +89,11 @@ module MyChart
     end
 
     def styled_datasets
-      datasets.size > 1 ? diff_color_on_z : diff_color_on_x
+      has_z? ? diff_color_on_z : diff_color_on_x
+    end
+
+    def has_z?
+      datasets.size > 1
     end
 
     def diff_color_on_z
@@ -104,9 +108,10 @@ module MyChart
     end
 
     def diff_color_on_x
-      [datasets[0].merge({
-        backgroundColor: Rainbow[labels.size].map(&:to_s)
-      })]
+      [datasets[0].
+         merge({backgroundColor: Rainbow[labels.size].map(&:to_s)}).
+         merge(concrete_style)
+      ]
     end
 
     def no_z_axis?

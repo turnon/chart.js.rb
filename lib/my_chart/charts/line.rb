@@ -8,4 +8,10 @@ class Line < MyChart::Proto
     {fill:false, lineTension: 0.1}
   end
 
+  def concrete_options
+    opt = {}
+    opt.merge!({legend: {display: false}}) unless has_z?
+    opt
+  end
+
 end

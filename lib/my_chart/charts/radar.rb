@@ -4,4 +4,8 @@ class Radar < MyChart::Proto
     :radar
   end
 
+  def concrete_options
+    {legend: {display: false}}
+  end
+
 end

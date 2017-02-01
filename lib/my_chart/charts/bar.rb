@@ -5,7 +5,7 @@ class Bar < MyChart::Proto
   end
 
   def concrete_options
-    {
+    opt = {
        scales: {
          yAxes: [{
              ticks: {
@@ -14,6 +14,8 @@ class Bar < MyChart::Proto
          }]
        }
      }
+    opt.merge!({legend: {display: false}}) unless has_z?
+    opt
   end
 
 end
