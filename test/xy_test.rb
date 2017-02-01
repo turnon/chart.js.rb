@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'xy'
+require 'my_chart/xy'
 
 class TestXY < MiniTest::Unit::TestCase
 
@@ -46,7 +46,7 @@ class TestXY < MiniTest::Unit::TestCase
   end
 
   def setup
-    @xy = XY.new({0 => [3,6,9,12,15,18], 2 => [2,5,8,11,14,17,20], 1 => [1,4,7,10,13,16,19]})
+    @xy = MyChart::XY.new({0 => [3,6,9,12,15,18], 2 => [2,5,8,11,14,17,20], 1 => [1,4,7,10,13,16,19]})
   end
 
   def mock_order_by &block

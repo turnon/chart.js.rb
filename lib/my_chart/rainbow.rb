@@ -1,4 +1,4 @@
-module Rainbow
+module MyChart::Rainbow
 
   SCALAR = (0..255)
   SCALAR_DESC = SCALAR.to_a.reverse.slice 1,254
@@ -21,16 +21,16 @@ module Rainbow
       RGBA.new PALETTE[picked]
     end
   end
-  
+
   class RGBA
     def initialize rgba_str
       @rgba = rgba_str
     end
-    
+
     def to_s
       @rgba
     end
-    
+
     def alpha f
       self.class.new @rgba.sub(/1\)/, [f, ')'].join)
     end

@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'x'
+require 'my_chart/x'
 
 class TestX < MiniTest::Unit::TestCase
 
@@ -15,6 +15,6 @@ class TestX < MiniTest::Unit::TestCase
   end
 
   def setup
-    @x = X.new (1..20).to_a
+    @x = MyChart::X.new (1..20).to_a
   end
 end

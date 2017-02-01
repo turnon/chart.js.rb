@@ -1,8 +1,8 @@
-require 'chart/rainbow'
+require 'my_chart/rainbow'
 require 'json'
-require 'xyz'
+require 'my_chart/xyz'
 
-module MyChartType
+module MyChart
   class Proto
 
     attr_reader :id
@@ -24,7 +24,7 @@ module MyChartType
     end
 
     def initialize grouped_data, opt={}
-      raise Exception, "#{type} has no z axis" if grouped_data.kind_of? XYZ and no_z_axis?
+      raise Exception, "#{type} has no z axis" if grouped_data.kind_of? MyChart::XYZ and no_z_axis?
       @id = opt[:id]
       @grouped_data = grouped_data
       @width = opt[:w]
@@ -94,8 +94,8 @@ module MyChartType
 
     def diff_color_on_z
       colors = Rainbow[datasets.size].map do |color|
-        {borderColor: color,
-         backgroundColor: color.alpha(0.2),
+        {borderColor: color.to_s,
+         backgroundColor: color.alpha(0.2).to_s,
          borderWidth: 1}
       end
       datasets.zip(colors).map do |ds, col|
@@ -105,7 +105,7 @@ module MyChartType
 
     def diff_color_on_x
       [datasets[0].merge({
-        backgroundColor: Rainbow[labels.size]
+        backgroundColor: Rainbow[labels.size].map(&:to_s)
       })]
     end
 

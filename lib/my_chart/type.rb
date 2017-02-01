@@ -1,7 +1,7 @@
-require 'helper/string'
-require 'chart/proto'
+require 'my_chart/helper/string'
+require 'my_chart/proto'
 
-module MyChartType
+module MyChart::Type
 
   class << self
 
@@ -41,7 +41,7 @@ module MyChartType
     end
 
     def definitions
-      path = File.expand_path("../../charts/*", __FILE__)
+      path = File.expand_path("../charts/*", __FILE__)
       Dir[path]
     end
 
@@ -49,7 +49,7 @@ module MyChartType
       self.constants.map do |const|
         const_get(const)
       end.select do |klass|
-        klass != Proto
+        klass != MyChart::Proto
       end
     end
 

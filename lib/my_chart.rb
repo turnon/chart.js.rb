@@ -1,4 +1,8 @@
 require 'erb'
+require 'my_chart/dsl/material'
+require 'my_chart/dsl/group'
+require 'my_chart/dsl/draw'
+require 'my_chart/dsl/output'
 
 module MyChart
 
@@ -14,9 +18,14 @@ module MyChart
   end
 
   ALL_DATA = :__all_data__
-  DEFAULT_TMPL = File.join File.dirname(__FILE__), 'tmpl.htm'
+  DEFAULT_TMPL = File.join(File.dirname(__FILE__), 'my_chart', 'tmpl.htm')
 
   class Chart
+
+    include MyChart::Dsl::Material
+    include MyChart::Dsl::Group
+    include MyChart::Dsl::Draw
+    include MyChart::Dsl::Output
 
     attr_reader :chart_tags
 
@@ -50,8 +59,3 @@ module MyChart
   end
 
 end
-
-require 'dsl/material'
-require 'dsl/group'
-require 'dsl/draw'
-require 'dsl/output'

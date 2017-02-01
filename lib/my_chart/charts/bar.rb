@@ -1,6 +1,4 @@
-class PlainBar < MyChartType::Proto
-
-  same_color_on_x
+class Bar < MyChart::Proto
 
   def concrete_type
     :bar

@@ -1,4 +1,4 @@
-class Doughnut < MyChartType::Proto
+class Doughnut < MyChart::Proto
 
   def concrete_type
     :doughnut

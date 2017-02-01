@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'chart/my_chart_type'
+require 'my_chart/type'
 require 'my_chart'
 
 class TestDraw < MiniTest::Unit::TestCase
