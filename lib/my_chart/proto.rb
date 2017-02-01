@@ -94,8 +94,8 @@ module MyChart
 
     def diff_color_on_z
       colors = Rainbow[datasets.size].map do |color|
-        {borderColor: color,
-         backgroundColor: color.alpha(0.2),
+        {borderColor: color.to_s,
+         backgroundColor: color.alpha(0.2).to_s,
          borderWidth: 1}
       end
       datasets.zip(colors).map do |ds, col|
@@ -105,7 +105,7 @@ module MyChart
 
     def diff_color_on_x
       [datasets[0].merge({
-        backgroundColor: Rainbow[labels.size]
+        backgroundColor: Rainbow[labels.size].map(&:to_s)
       })]
     end
 
