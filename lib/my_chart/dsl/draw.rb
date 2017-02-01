@@ -53,7 +53,7 @@ module MyChart
         end
 
         def method_missing name, *arg
-          return opt[name] if [:w, :h, :from, :keys, :asc, :desc].include? name
+          return opt[name] if [:w, :h, :from, :keys, :asc, :desc, :limit].include? name
           super
         end
 
