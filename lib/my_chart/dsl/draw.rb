@@ -31,6 +31,7 @@ module MyChart
         xy = (@grouped[[cfg.x, cfg.from]] ||= (x.group_by &grp_m))
         xy = (@grouped[[cfg.x, cfg.keys, cfg.from]] ||= (xy.complete_keys cfg.keys)) if cfg.keys
         xy = xy.sort(cfg) if cfg.asc or cfg.desc
+        xy = xy.limit(cfg) if cfg.first or cfg.last
         return xy unless cfg.y
 
         grp_m = check_overwrite_group_method cfg.y
@@ -53,7 +54,7 @@ module MyChart
         end
 
         def method_missing name, *arg
-          return opt[name] if [:w, :h, :from, :keys, :asc, :desc, :limit].include? name
+          return opt[name] if [:w, :h, :from, :keys, :asc, :desc, :first, :last].include? name
           super
         end
 
@@ -62,12 +63,18 @@ module MyChart
           [order, 'by', (asc or desc)].join('_') if order
         end
 
+        def limit
+          lm = (first and :first) or (last and :last)
+          [lm, (first or last)].join('_') if lm
+        end
+
         def data_id
           [x,
            y ? y : "no_y",
            keys ? "keys_#{keys.hash}" : "no_keys",
            from ? "from_#{from}" : "from_all",
-           sort
+           sort,
+           limit
           ].compact.join '__'
         end
       end

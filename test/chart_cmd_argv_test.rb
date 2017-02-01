@@ -34,8 +34,9 @@ class TestChartCmdARGV < MiniTest::Unit::TestCase
   end
 
   def test_limit
-    argv = new_cmd limit: 10
-    assert_equal 10, argv.limit
+    argv = new_cmd first: 10
+    assert_equal 10, argv.first
+    assert_equal nil, argv.last
   end
 
   private
