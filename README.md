@@ -1,8 +1,24 @@
-# mychart.js.rb
+# MyChart.js
 
 generate chart.js html with ruby
 
-## usage
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'my_chart'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install my_chart
+
+## Usage
 
 suppose you want to have some statistic on mail files:
 
@@ -46,7 +62,7 @@ execute the script:
     $ mychartjs mail_st.rb
 ```
 
-## supported charts
+## Supported charts
 
 bar, doughnut, line, pie, polar_area, radar are built-in with basic style
 
@@ -88,7 +104,7 @@ MyChart.js do
   select :fail do |m|
     m.fail?
   end
-  
+
   line :day, :fail?, w: 1280, h: 500
 
   bar :day, w: 1280, h: 500
