@@ -53,6 +53,7 @@ class TestMyChart < MiniTest::Unit::TestCase
 
     @mc1 = MyChart.js do
       material [1,2,3,4,5,6,7,8,9,10]
+      material ['a', 'b', 'c', 'd'], name: :a_to_d
     end
 
   end

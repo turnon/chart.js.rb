@@ -6,6 +6,11 @@ module MyChartTest::Data
     assert_equal exp_data, @mc1.raw_data[MyChart::ALL_DATA]
   end
 
+  def test_material_with_name
+    expected = make_x %w{a b c d}
+    assert_equal expected, @mc1.raw_data[:a_to_d]
+  end
+
   def test_group_by_method
     assert @mc.group_by_methods[:odd_or_even]
   end

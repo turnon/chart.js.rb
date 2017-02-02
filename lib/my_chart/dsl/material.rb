@@ -4,9 +4,9 @@ module MyChart
   module Dsl
     module Material
 
-      def material dat=nil, &blk
-        @__data__ = (dat ? dat : blk.call)
-        raw_data[ALL_DATA] = MyChart::X.new @__data__
+      def material dat=nil, name: ALL_DATA, &blk
+        data = (dat ? dat : blk.call)
+        raw_data[name] = MyChart::X.new data
       end
 
       def select name, opt={}, &blk
