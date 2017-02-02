@@ -15,7 +15,7 @@ module MyChart::Rainbow
     steps = PALETTE.size / n
     n.times.map do |t|
       picked = picked + steps
-      picked = picked - PALETTE.size if picked > PALETTE.size
+      picked = picked - PALETTE.size if picked >= PALETTE.size
       picked
     end.map do |picked|
       RGBA.new PALETTE[picked]
