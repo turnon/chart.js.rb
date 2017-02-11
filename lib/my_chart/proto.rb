@@ -5,7 +5,7 @@ require 'my_chart/xyz'
 module MyChart
   class Proto
 
-    attr_reader :id
+    attr_reader :id, :name
 
     class << self
 
@@ -29,6 +29,7 @@ module MyChart
       @grouped_data = grouped_data
       @width = opt[:w]
       @height = opt[:h]
+      @name = opt[:name]
     end
 
     def labels
@@ -58,7 +59,11 @@ module MyChart
     end
 
     def default_html
-      "<div><canvas id='#{id}' width='#{width}' height='#{height}'></canvas><script>#{iife}</script></div>"
+      "<div class='my_chart'>#{title}<canvas id='#{id}' width='#{width}' height='#{height}'></canvas><script>#{iife}</script></div>"
+    end
+
+    def title
+      name ? "<h1>#{name}</h1>" : ""
     end
 
     def width

@@ -13,7 +13,7 @@ module MyChart
           klass = MyChart::Type.concrete chart_cmd
           grp_data = grouped chart_config
 
-          charts[chart_id] = klass.new grp_data, id: chart_id, w: chart_config.w, h: chart_config.h
+          charts[chart_id] = klass.new grp_data, id: chart_id, w: chart_config.w, h: chart_config.h, name: chart_config.name
         end
       end
 
@@ -54,7 +54,7 @@ module MyChart
         end
 
         def method_missing name, *arg
-          return opt[name] if [:w, :h, :from, :keys, :asc, :desc, :first, :last].include? name
+          return opt[name] if [:w, :h, :name, :from, :keys, :asc, :desc, :first, :last].include? name
           super
         end
 
